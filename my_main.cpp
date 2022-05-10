@@ -4,10 +4,12 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
+#include <limits>
 
 using namespace ft;
 
-void print_vec(vector<int> vec)
+template<class T>
+void print_vec(vector<T> vec)
 {
 	for (size_t i = 0; i < vec.size(); i++)
 		std::cout << i + 1 << " " << vec[i] << std::endl;
@@ -16,11 +18,11 @@ void print_vec(vector<int> vec)
 int	main()
 {
 	{
-		srand(time(NULL));
-		vector<int> vec(2, 12);
-		for(size_t i = 0; i < vec.size(); i++)
-			vec[i] = rand() % 100;
-		print_vec(vec);
+		vector<int> vec(42);
+
+
+			vec.reserve(vec.max_size() + 1);
+
 	}
 	return (0);
 }
