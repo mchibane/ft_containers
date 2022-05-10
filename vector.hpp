@@ -26,7 +26,6 @@ namespace	ft
 		pointer			_ptr;
 		size_type		_capacity;
 		size_type		_size;
-		size_type		_max_size;
 
 	public:
 
@@ -35,11 +34,11 @@ namespace	ft
 		// DEFAULT
 		explicit vector(const allocator_type &alloc = allocator_type()) :
 					_alloc(alloc),
-					_ptr(_alloc.allocate(0)),
-					_capacity(0),
+					_ptr(_alloc.allocate(1)),
+					_capacity(1),
 					_size(0)
 		{
-			_alloc.construct(_ptr, 0);
+			_alloc.construct(_ptr, value_type());
 		}
 
 		// FILL
@@ -56,11 +55,12 @@ namespace	ft
 		// COPY
 		vector(vector const &x) :
 				_alloc(x._alloc),
-				_ptr(NULL),
-				_capacity(x._capacity),
-				_size(x._size)
+				_ptr(_alloc.allocate(x._capacity)),
+				_capacity(x.capacity()),
+				_size(x.size())
 		{
-			*this = x;
+			for (size_type i = 0; i < x.size(); i++)
+				_alloc.construct(_ptr + i, *(x._ptr + i));
 		}
 
 		// DESTRUCTOR
@@ -76,9 +76,10 @@ namespace	ft
 			if (this != &rhs)
 			{
 				this->clear();
-				_size = rhs._size;
-				_capacity = rhs._capacity;
-				_ptr = _alloc.allocate(rhs._capacity);
+				_alloc.deallocate(_ptr, _capacity);
+				_ptr = _alloc.allocate(rhs.capacity());
+				_size = rhs.size();
+				_capacity = rhs.capacity();
 				for (size_type i = 0; i < rhs._size; i++)
 					_alloc.construct(_ptr + i, *(rhs._ptr + i));
 			}
@@ -120,7 +121,20 @@ namespace	ft
 
 			/* MODIFIERS */
 
-		void	pop_back(void) {_alloc.destroy(_ptr + _size); _size--; }
+		void	push_back(value_type const &val)
+		{
+			if (_size == _capacity)
+				reserve(_capacity + 1);
+			_alloc.construct(_ptr + _size, val);
+			_size++;
+		}
+		void	pop_back(void)
+		{
+			if (_size == 0)
+				return ;
+			_alloc.destroy(_ptr + (_size - 1));
+			_size--;
+		}
 		void	clear(void)
 		{
 			for (size_type i = 0; i < _size; i++)
