@@ -91,6 +91,22 @@ namespace	ft
 
 		size_type		size(void) const		{ return (_size); }
 		size_type		max_size(void) const	{ return (_alloc.max_size()); }
+		void			resize(size_type n, value_type val = value_type())
+		{
+			if (n < _size)
+			{
+				for (size_type i = n; i < _size; i++)
+					_alloc.destroy(_ptr + i);
+			}
+			if (n > _size)
+			{
+				if (n > _capacity)
+					reserve(n);
+				for (size_type i = _size; i < n; i++)
+					_alloc.construct(_ptr + i, val);
+			}
+			_size = n;
+		}
 		size_type		capacity(void) const	{ return (_capacity); }
 		bool			empty(void) const		{ return (_size == 0); }
 		void			reserve(size_type n)
@@ -124,7 +140,7 @@ namespace	ft
 		void	push_back(value_type const &val)
 		{
 			if (_size == _capacity)
-				reserve(_capacity + 1);
+				reserve(_size * 2);
 			_alloc.construct(_ptr + _size, val);
 			_size++;
 		}
