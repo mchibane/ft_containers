@@ -34,12 +34,10 @@ namespace	ft
 		// DEFAULT
 		explicit vector(const allocator_type &alloc = allocator_type()) :
 					_alloc(alloc),
-					_ptr(_alloc.allocate(1)),
-					_capacity(1),
+					_ptr(NULL),
+					_capacity(0),
 					_size(0)
-		{
-			_alloc.construct(_ptr, value_type());
-		}
+		{}
 
 		// FILL
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) :
@@ -134,12 +132,32 @@ namespace	ft
 		reference		operator[](size_type n)			{ return (*(_ptr + n)); }
 		const_reference operator[](size_type n) const	{ return (*(_ptr + n)) ; }
 
+		reference		at(size_type n)
+		{
+			if (n >= _size)
+				throw(std::out_of_range("ft::vector: Out of Range error"));
+			return (*(_ptr + n));
+		}
+		const_reference	at(size_type n) const
+		{
+			if (n >= _size)
+				throw(std::out_of_range("ft::vector: Out of Range error"));
+			return (*(_ptr + n));
+		}
+
+		reference		front(void)			{ return (*_ptr); }
+		const_reference	front(void) const	{ return (*_ptr); }
+
+		reference		back(void)			{ return (*(_ptr + (_size - 1))); }
+		reference		back(void) const	{ return (*(_ptr + (_size - 1))); }
 
 			/* MODIFIERS */
 
 		void	push_back(value_type const &val)
 		{
-			if (_size == _capacity)
+			if (_capacity == 0)
+				reserve(1);
+			else if (_size == _capacity)
 				reserve(_size * 2);
 			_alloc.construct(_ptr + _size, val);
 			_size++;
@@ -162,6 +180,17 @@ namespace	ft
 			/* ALLOCATOR */
 
 		allocator_type	get_allocator(void) const { return (_alloc); }
+	};
+
+	template<class T>
+	class vectorIterator
+	{
+	public:
+		typedef T*	iterator;
+	private:
+
+	public:
+
 	};
 }
 
