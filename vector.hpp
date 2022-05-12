@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include "vectorIterator.hpp"
 
 #include <iostream>
 
@@ -13,13 +14,14 @@ namespace	ft
 	{
 	public:
 		typedef T											value_type;
-		typedef	Allocator									allocator_type;
+		typedef Allocator									allocator_type;
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename allocator_type::difference_type	difference_type;
-		typedef	typename allocator_type::size_type			size_type;
+		typedef typename allocator_type::size_type			size_type;
+		typedef vectorIterator<T>							iterator;
 
 	private:
 		allocator_type	_alloc;
@@ -84,6 +86,10 @@ namespace	ft
 			return (*this);
 		}
 
+
+			/* ITERATORS */
+
+		iterator	begin(void) {return (_ptr); }
 
 			/* CAPACITY */
 
@@ -180,17 +186,6 @@ namespace	ft
 			/* ALLOCATOR */
 
 		allocator_type	get_allocator(void) const { return (_alloc); }
-	};
-
-	template<class T>
-	class vectorIterator
-	{
-	public:
-		typedef T*	iterator;
-	private:
-
-	public:
-
 	};
 }
 
