@@ -240,15 +240,25 @@ namespace	ft
 		}
 
 		// SINGLE ELEMENT
-		// iterator	insert(iterator position, value_type const &val)
-		// {
-		// 	pointer	tmp = _ptr;
-
-		// 	if (_capacity == 0)
-		// 		reserve(1);
-		// 	else if (_size == _capacity)
-		// 		reserve(_size * 2);
-		// }
+		iterator	insert(iterator position, value_type const &val)
+		{
+			if (_capacity == 0)
+			{
+				push_back(val);
+				return (iterator(_ptr));
+			}
+			else if (_size == _capacity)
+				reserve(_size * 2);
+			if (_size == 0)
+				_alloc.construct(_ptr, val);
+			else
+				_alloc.construct(_ptr + _size, *(_ptr + (_size - 1)));
+			for (iterator it = end() - 1; it != position; it--)
+				*it = *(it - 1);
+			*position = val;
+			_size++;
+			return (iterator(_ptr));
+		}
 
 		iterator	erase(iterator position)
 		{
