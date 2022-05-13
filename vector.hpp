@@ -6,6 +6,7 @@
 #include "vectorIterator.hpp"
 
 #include <iostream>
+#include <vector>
 
 namespace	ft
 {
@@ -21,7 +22,11 @@ namespace	ft
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::size_type			size_type;
-		typedef vectorIterator<T>							iterator;
+
+		typedef typename std::vector<T>::iterator			iterator;
+		typedef typename std::vector<T>::const_iterator		const_iterator;
+		typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
+		typedef typename std::vector<T>::const_reverse_iterator	const_reverse_iterator;
 
 	private:
 		allocator_type	_alloc;
@@ -89,7 +94,17 @@ namespace	ft
 
 			/* ITERATORS */
 
-		iterator	begin(void) {return (_ptr); }
+		iterator				begin(void)			{ return (iterator(_ptr)); }
+		const_iterator			begin(void) const	{ return (iterator(_ptr)); }
+
+		iterator				end(void)			{ return (iterator(_ptr + _size)); }
+		const_iterator			end(void) const		{ return (iterator(_ptr + _size)); }
+
+		reverse_iterator		rbegin(void)		{ return (reverse_iterator(this->end())); }
+		const_reverse_iterator	rbegin(void) const	{ return (reverse_iterator(this->end())); }
+
+		reverse_iterator		rend(void)			{ return (reverse_iterator(iterator(this->begin()))); }
+		const_reverse_iterator	rend(void) const	{ return (reverse_iterator(iterator(this->begin()))); }
 
 			/* CAPACITY */
 
@@ -159,6 +174,14 @@ namespace	ft
 
 			/* MODIFIERS */
 
+		void	assign(size_type n, value_type const &val)
+		{
+			if (n > _capacity)
+				reserve(n);
+			for (size_type i = 0; i < n; i++)
+				_alloc.construct(_ptr + i, val);
+			_size = n;
+		}
 		void	push_back(value_type const &val)
 		{
 			if (_capacity == 0)
