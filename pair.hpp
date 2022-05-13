@@ -1,10 +1,10 @@
 #ifndef PAIR_HPP
 #define PAIR_HPP
 
-#include <utility>
-
 namespace ft
 {
+		/* PAIR CLASS */
+
 	template<class T1, class T2>
 	struct pair
 	{
@@ -38,6 +38,9 @@ namespace ft
 
 		}
 	};
+
+
+		/* RELATIONAL OPERATORS */
 
 	template<class T1, class T2>
 	bool	operator==(pair<T1, T2> const &lhs, pair<T1, T2> const &rhs)
