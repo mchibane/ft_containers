@@ -79,8 +79,8 @@ namespace	ft
 		// COPY
 		vector(vector const &x) :
 				_alloc(x._alloc),
-				_ptr(_alloc.allocate(x._capacity)),
-				_capacity(x.capacity()),
+				_ptr(_alloc.allocate(x._size)),
+				_capacity(x.size()),
 				_size(x.size())
 		{
 			for (size_type i = 0; i < x.size(); i++)
@@ -268,7 +268,7 @@ namespace	ft
 				n++;
 				_size--;
 			}
-			for (size_type i = 0; i < _size; i++)
+			for (size_type i = 0; i < _size - n; i++)
 			{
 				*first = *last;
 				first++;
