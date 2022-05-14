@@ -258,22 +258,53 @@ namespace	ft
 			for (size_type i = _size; i >= pos; i--)
 			{
 				if (i == pos)
+				{
+					_alloc.destroy(_ptr + i);
 					_alloc.construct(_ptr + i, val);
+				}
 				else
+				{
 					_alloc.construct(_ptr + i, *(_ptr + (i - 1)));
+					_alloc.destroy(_ptr + (i - 1));
+				}
 			}
 			_size++;
 			return (iterator(_ptr + pos));
 		}
 
-		// // FILL
-		// void		insert(iterator position, size_type n, value_type const &val)
-		// {
-		// 	if (_capacity == 0)
-		// 		reserve(1);
-		// 	else if ((_size + n) > _capacity)
-		// 		reserve(_size + n);
-		// }
+		// FILL
+		void		insert(iterator position, size_type n, value_type const &val)
+		{
+			size_type	start = 0;
+			size_type	end = 0;
+
+			for (iterator it = begin(); it != position; it++)
+				start++;
+			end = start + n;
+			if (capacity() == 0)
+				reserve(1);
+			else if ((_size + n) > capacity())
+			{
+				if (max_size() - _size >= _size && n <= _size)
+					reserve(_size * 2);
+				else
+					reserve(_size + n);
+			}
+			for (size_type i = (_size + n) - 1; i >= start; i--)
+			{
+				if (i < end)
+				{
+					_alloc.destroy(_ptr + i);
+					_alloc.construct(_ptr + i, val);
+				}
+				else
+				{
+					_alloc.construct(_ptr + i, *(_ptr + (i - n)));
+					_alloc.destroy(_ptr + (i - n));
+				}
+			}
+			_size += n;
+		}
 
 		iterator	erase(iterator position)
 		{
