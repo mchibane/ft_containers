@@ -337,29 +337,40 @@ namespace	ft
 
 		iterator	erase(iterator position)
 		{
-			for (iterator tmp = position; tmp + 1 != end(); tmp ++)
-				*tmp = *(tmp + 1);
+			size_type	i = 0;
+
+			for (iterator it = begin(); it != position; it++)
+				i++;
+			while (i < _size)
+			{
+				_alloc.destroy(_ptr + i);
+				_alloc.construct(_ptr + i, *(_ptr + i + 1));
+				i++;
+			}
 			_size--;
 			return (iterator(position));
 		}
 
 		iterator	erase(iterator first, iterator last)
 		{
-			size_type	n = 0;
-			iterator	ret = first;
+			size_type	n = std::distance(first, last);
+			size_type	start = 0;
+			size_type	end = n;
 
-			for (iterator tmp = first; tmp != last; tmp++)
+			for (iterator it = begin(); it != first; it++)
+				start++;
+			end += start;
+			if (n == 0)
+				return (first);
+			for (size_type i = start; i < n; i++)
 			{
-				n++;
-				_size--;
+				_alloc.destroy(_ptr + i);
+				_alloc.construct(_ptr + i + start, *(_ptr + i + n));
 			}
-			for (size_type i = 0; i < _size - n; i++)
-			{
-				*first = *last;
-				first++;
-				last++;
-			}
-			return (iterator(ret));
+			for (size_type i = end; i < _size; i++)
+				_alloc.destroy(_ptr + i);
+			_size -= n;
+			return (iterator(first));
 		}
 
 		void		clear(void)
