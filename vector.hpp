@@ -4,6 +4,8 @@
 #include <memory>
 #include <stdexcept>
 #include "vectorIterator.hpp"
+#include "isIntegral.hpp"
+#include "enableIf.hpp"
 
 #include <iostream>
 #include <vector>
@@ -59,7 +61,7 @@ namespace	ft
 
 		// RANGE
 		template<class InputIterator>
-		vector(InputIterator first, InputIterator last, allocator_type const &alloc = allocator_type()) :
+		vector(InputIterator first, InputIterator last, allocator_type const &alloc = allocator_type(), typename ft::enable_if< !ft::is_integral< InputIterator >::value >::type * = 0) :
 				_alloc(alloc)
 		{
 			size_type		n = 0;
@@ -195,7 +197,7 @@ namespace	ft
 
 		// RANGE
 		template<class InputIterator>
-		void		assign(InputIterator first, InputIterator last)
+		void		assign(InputIterator first, InputIterator last, typename ft::enable_if< !ft::is_integral< InputIterator >::value >::type * = 0)
 		{
 			size_type	n = 0;
 
@@ -242,6 +244,10 @@ namespace	ft
 		// SINGLE ELEMENT
 		iterator	insert(iterator position, value_type const &val)
 		{
+			size_type	pos = 0;
+
+			for(iterator it = begin(); it != position; it++)
+				pos++;
 			if (_capacity == 0)
 			{
 				push_back(val);
@@ -249,16 +255,25 @@ namespace	ft
 			}
 			else if (_size == _capacity)
 				reserve(_size * 2);
-			if (_size == 0)
-				_alloc.construct(_ptr, val);
-			else
-				_alloc.construct(_ptr + _size, *(_ptr + (_size - 1)));
-			for (iterator it = end() - 1; it != position; it--)
-				*it = *(it - 1);
-			*position = val;
+			for (size_type i = _size; i >= pos; i--)
+			{
+				if (i == pos)
+					_alloc.construct(_ptr + i, val);
+				else
+					_alloc.construct(_ptr + i, *(_ptr + (i - 1)));
+			}
 			_size++;
-			return (iterator(_ptr));
+			return (iterator(_ptr + pos));
 		}
+
+		// // FILL
+		// void		insert(iterator position, size_type n, value_type const &val)
+		// {
+		// 	if (_capacity == 0)
+		// 		reserve(1);
+		// 	else if ((_size + n) > _capacity)
+		// 		reserve(_size + n);
+		// }
 
 		iterator	erase(iterator position)
 		{
