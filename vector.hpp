@@ -255,19 +255,13 @@ namespace	ft
 			}
 			else if (_size == _capacity)
 				reserve(_size * 2);
-			for (size_type i = _size; i >= pos; i--)
+			for (size_type i = _size; i > pos; i--)
 			{
-				if (i == pos)
-				{
-					_alloc.destroy(_ptr + i);
-					_alloc.construct(_ptr + i, val);
-				}
-				else
-				{
 					_alloc.construct(_ptr + i, *(_ptr + (i - 1)));
 					_alloc.destroy(_ptr + (i - 1));
-				}
 			}
+			_alloc.destroy(_ptr + pos);
+			_alloc.construct(_ptr + pos, val);
 			_size++;
 			return (iterator(_ptr + pos));
 		}
@@ -290,7 +284,7 @@ namespace	ft
 				else
 					reserve(_size + n);
 			}
-			for (size_type i = (_size + n) - 1; i >= start; i--)
+			for (size_type i = (_size + n) - 1; i > start; i--)
 			{
 				if (i < end)
 				{
@@ -302,6 +296,41 @@ namespace	ft
 					_alloc.construct(_ptr + i, *(_ptr + (i - n)));
 					_alloc.destroy(_ptr + (i - n));
 				}
+			}
+			_alloc.destroy(_ptr + start);
+			_alloc.construct(_ptr + start, val);
+			_size += n;
+		}
+
+		// RANGE
+		template<class InputIterator>
+		void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if< !ft::is_integral< InputIterator >::value >::type * = 0)
+		{
+			size_type	n = std::distance(first, last);
+			size_type	start = 0;
+			size_type	end = n;
+
+			for (iterator it = begin(); it != position; it++)
+				start++;
+			end += start;
+			if (capacity() == 0)
+				reserve(1);
+			else if ((_size + n) > capacity())
+			{
+				if (max_size() - _size >= _size && n <= _size)
+					reserve(_size * 2);
+				else
+					reserve(_size + n);
+			}
+			for (size_type i = (_size + n) - 1; i >= end; i--)
+			{
+				_alloc.construct(_ptr + i, *(_ptr + (i - n)));
+				_alloc.destroy(_ptr + (i - n));
+			}
+			for (size_type i = start; i < end; i++)
+			{
+				_alloc.destroy(_ptr + i);
+				_alloc.construct(_ptr + i, *(first++));
 			}
 			_size += n;
 		}
