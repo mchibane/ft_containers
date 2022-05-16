@@ -341,31 +341,28 @@ namespace	ft
 
 			for (iterator it = begin(); it != position; it++)
 				i++;
+			_size--;
 			while (i < _size)
 			{
 				_alloc.destroy(_ptr + i);
 				_alloc.construct(_ptr + i, *(_ptr + i + 1));
 				i++;
 			}
-			_size--;
 			return (iterator(position));
 		}
 
 		iterator	erase(iterator first, iterator last)
 		{
 			size_type	n = std::distance(first, last);
-			size_type	start = 0;
-			size_type	end = n;
+			size_type	start = std::distance(begin(), first);
+			size_type	end = start + n;
 
-			for (iterator it = begin(); it != first; it++)
-				start++;
-			end += start;
 			if (n == 0)
 				return (first);
-			for (size_type i = start; i < n; i++)
+			for (size_type i = start; i < _size - n; i++)
 			{
 				_alloc.destroy(_ptr + i);
-				_alloc.construct(_ptr + i + start, *(_ptr + i + n));
+				_alloc.construct(_ptr + i, *(_ptr + i + n));
 			}
 			for (size_type i = end; i < _size; i++)
 				_alloc.destroy(_ptr + i);
