@@ -30,10 +30,13 @@ namespace	ft
 
 		typedef typename ft::vectorIterator<T>				iterator;
 		typedef typename ft::vectorIterator<const T>		const_iterator;
+		typedef typename ft::reverse_iterator<T>			reverse_iterator;
+		typedef typename ft::reverse_iterator<const T>		const_reverse_iterator;
+
 		// typedef typename std::vector<T>::iterator			iterator;
 		// typedef typename std::vector<T>::const_iterator		const_iterator;
-		typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
-		typedef typename std::vector<T>::const_reverse_iterator	const_reverse_iterator;
+		// typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
+		// typedef typename std::vector<T>::const_reverse_iterator	const_reverse_iterator;
 
 
 	private:

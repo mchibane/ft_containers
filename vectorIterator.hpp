@@ -16,7 +16,7 @@ namespace ft
 		typedef std::ptrdiff_t				difference_type;
 		typedef random_access_iterator_tag	iterator_category;
 
-	private:
+	protected:
 		pointer	_ptr;
 
 	public:
@@ -33,6 +33,8 @@ namespace ft
 		}
 		~vectorIterator(void) {}
 
+		pointer	getPtr(void) const { return (_ptr); }
+
 		template<typename I>
 		operator vectorIterator<const I>(void)
 		{
@@ -42,15 +44,15 @@ namespace ft
 			/* EQUIVALENCES */
 
 		template<class I>
-		bool	operator==(vectorIterator<I> const &rhs) { return (_ptr == rhs._ptr); }
+		bool	operator==(vectorIterator<I> const &rhs) { return (_ptr == rhs.getPtr()); }
 		template<class I>
 		bool	operator!=(vectorIterator<I> const &rhs) { return (!(*this == rhs)); }
 
 
 			/* DEREFERENCE */
 
-		reference			operator*(void) const	{return (*_ptr); }
-		vectorIterator		operator->(void) const	{return (_ptr); }
+		reference	operator*(void) const	{return (*_ptr); }
+		pointer		operator->(void) const	{return (_ptr); }
 
 
 			/* INCREMENTATION & DECREMENTATION */
@@ -82,6 +84,10 @@ namespace ft
 		{
 			return (vectorIterator(_ptr + n));
 		}
+		friend vectorIterator	operator+(difference_type n, vectorIterator const &x)
+		{
+			return (x.getPtr() + n);
+		}
 
 		vectorIterator	operator-(difference_type n) const
 		{
@@ -95,23 +101,23 @@ namespace ft
 
 			/* INEQUALITY */
 
-		template<typename I>
-		bool	operator<(vectorIterator<I> const &rhs)
+		template<class I>
+		bool	operator<(vectorIterator<I> const &rhs) const
 		{
-			return (_ptr < rhs._ptr);
+			return (_ptr < rhs.getPtr());
 		}
-		template<typename I>
-		bool	operator>(vectorIterator<I> const &rhs)
+		template<class I>
+		bool	operator>(vectorIterator<I> const &rhs) const
 		{
 			return (rhs < *this);
 		}
-		template<typename I>
-		bool	operator<=(vectorIterator<I> const &rhs)
+		template<class I>
+		bool	operator<=(vectorIterator<I> const &rhs) const
 		{
 			return (!(rhs < *this));
 		}
-		template<typename I>
-		bool	operator>=(vectorIterator<I> const &rhs)
+		template<class I>
+		bool	operator>=(vectorIterator<I> const &rhs) const
 		{
 			return (!(*this < rhs));
 		}
@@ -136,7 +142,7 @@ namespace ft
 		{
 			return (_ptr[n]);
 		}
-	};
-};
+	}; // class
+}; //namespace ft
 
 #endif
