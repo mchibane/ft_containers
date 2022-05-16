@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <iterator>
 #include "vectorIterator.hpp"
 #include "isIntegral.hpp"
 #include "enableIf.hpp"
@@ -27,10 +28,10 @@ namespace	ft
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::size_type			size_type;
 
-		//typedef typename ft::vectorIterator<T>				iterator;
-
-		typedef typename std::vector<T>::iterator			iterator;
-		typedef typename std::vector<T>::const_iterator		const_iterator;
+		typedef typename ft::vectorIterator<T>				iterator;
+		typedef typename ft::vectorIterator<const T>		const_iterator;
+		// typedef typename std::vector<T>::iterator			iterator;
+		// typedef typename std::vector<T>::const_iterator		const_iterator;
 		typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
 		typedef typename std::vector<T>::const_reverse_iterator	const_reverse_iterator;
 
@@ -311,8 +312,12 @@ namespace	ft
 		template<class InputIterator>
 		void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if< !ft::is_integral< InputIterator >::value >::type * = 0)
 		{
-			size_type	n = std::distance(first, last);
-			size_type	start = std::distance(begin(), position);
+			size_type	n = 0/*std::distance(first, last)*/;
+			for (InputIterator tmp = first; tmp != last; tmp++)
+				n++;
+			size_type	start = 0 /*std::distance(begin(), position)*/;
+			for (iterator it = begin(); it != position; it++)
+				start++;
 			size_type	end = start + n;
 
 			if (capacity() == 0)
@@ -355,8 +360,12 @@ namespace	ft
 
 		iterator	erase(iterator first, iterator last)
 		{
-			size_type	n = std::distance(first, last);
-			size_type	start = std::distance(begin(), first);
+			size_type	n = 0 /*std::distance(first, last)*/;
+			for (iterator tmp = first; tmp != last; tmp++)
+				n++;
+			size_type	start = 0 /*std::distance(begin(), first)*/;
+			for (iterator it = begin(); it != first; it++)
+				start++;
 			size_type	end = start + n;
 
 			if (n == 0)
