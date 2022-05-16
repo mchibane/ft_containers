@@ -2,6 +2,7 @@
 #define VECTOR_ITERATOR_HPP
 
 #include "iteratorTags.hpp"
+#include "vector.hpp"
 #include <cstddef>
 
 namespace ft
@@ -143,6 +144,51 @@ namespace ft
 			return (_ptr[n]);
 		}
 	}; // class
+
+
+	/*******************/
+	/* NON MEMBER FCTS */
+	/*******************/
+
+		/* RELATIONAL OPERATORS */
+
+	template<typename T, typename U>
+	bool	operator==( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	{
+		return (lhs.getPtr() == rhs.getPtr());
+	}
+
+	template<typename T, typename U>
+	bool	operator!=( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	{
+		return (lhs.getPtr() != rhs.getPtr());
+	}
+
+	template<typename T, typename U>
+	bool operator<( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	{
+		return (lhs.getPtr() < rhs.getPtr());
+	}
+
+	template<typename T, typename U>
+	bool operator<=( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	{
+		return (lhs.getPtr() <= rhs.getPtr());
+	}
+
+	template<typename T, typename U>
+	bool	operator>( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	{
+		return (lhs.getPtr() > rhs.getPtr());
+	}
+
+	template<typename T, typename U>
+	bool	operator>=( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	{
+		return (lhs.getPtr() >= rhs.getPtr());
+	}
+
+
 }; //namespace ft
 
 #endif
