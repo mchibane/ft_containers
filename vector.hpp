@@ -6,6 +6,8 @@
 #include "vectorIterator.hpp"
 #include "isIntegral.hpp"
 #include "enableIf.hpp"
+#include "lexicographicalCompare.hpp"
+#include "equal.hpp"
 
 #include <iostream>
 #include <vector>
@@ -25,10 +27,13 @@ namespace	ft
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::size_type			size_type;
 
+		//typedef typename ft::vectorIterator<T>				iterator;
+
 		typedef typename std::vector<T>::iterator			iterator;
 		typedef typename std::vector<T>::const_iterator		const_iterator;
 		typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
 		typedef typename std::vector<T>::const_reverse_iterator	const_reverse_iterator;
+
 
 	private:
 		allocator_type	_alloc;
@@ -367,6 +372,22 @@ namespace	ft
 			return (iterator(first));
 		}
 
+		void		swap(vector &x)
+		{
+			vector	tmp(*this);
+			pointer	tmp_ptr = _ptr;
+
+			_alloc = x.get_allocator();
+			_size = x.size();
+			_capacity = x.capacity();
+			_ptr = x._ptr;
+
+			x._alloc = tmp.get_allocator();
+			x._size = tmp.size();
+			x._capacity = tmp.capacity();
+			x._ptr = tmp_ptr;
+		}
+
 		void		clear(void)
 		{
 			for (size_type i = 0; i < _size; i++)
@@ -379,8 +400,57 @@ namespace	ft
 
 		allocator_type	get_allocator(void) const { return (_alloc); }
 	};
+} // namespace ft
+
+
+/*******************/
+/* NON MEMBER FCTS */
+/*******************/
+
+/* SWAP */
+
+template<class T, class Alloc>
+void	swap(ft::vector<T, Alloc> &x, ft::vector<T, Alloc> &y) { x.swap(y); }
+
+
+/* RELATIONNAL OPERATORS */
+
+template<class T, class Alloc>
+bool	operator==(ft::vector<T, Alloc> const &lhs, ft::vector<T, Alloc> const &rhs)
+{
+	if (lhs.size() != rhs.size())
+		return (false);
+	return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 }
 
+template<class T, class Alloc>
+bool	operator<(ft::vector<T, Alloc> const &lhs, ft::vector<T, Alloc> const &rhs)
+{
+	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+}
 
+template<class T, class Alloc>
+bool	operator!=(ft::vector<T, Alloc> const &lhs, ft::vector<T, Alloc> const &rhs)
+{
+	return (!(lhs == rhs));
+}
+
+template<class T, class Alloc>
+bool	operator>(ft::vector<T, Alloc> const &lhs, ft::vector<T, Alloc> const &rhs)
+{
+	return (rhs < lhs);
+}
+
+template<class T, class Alloc>
+bool	operator<=(ft::vector<T, Alloc> const &lhs, ft::vector<T, Alloc> const &rhs)
+{
+	return (!(rhs < lhs));
+}
+
+template<class T, class Alloc>
+bool	operator>=(ft::vector<T, Alloc> const &lhs, ft::vector<T, Alloc> const &rhs)
+{
+	return (!(lhs < rhs));
+}
 
 #endif
