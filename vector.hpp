@@ -307,15 +307,12 @@ namespace	ft
 		void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if< !ft::is_integral< InputIterator >::value >::type * = 0)
 		{
 			size_type	n = std::distance(first, last);
-			size_type	start = 0;
-			size_type	end = n;
+			size_type	start = std::distance(begin(), position);
+			size_type	end = start + n;
 
-			for (iterator it = begin(); it != position; it++)
-				start++;
-			end += start;
 			if (capacity() == 0)
 				reserve(1);
-			else if ((_size + n) > capacity())
+			if ((_size + n) > capacity())
 			{
 				if (max_size() - _size >= _size && n <= _size)
 					reserve(_size * 2);
