@@ -7,10 +7,10 @@
 #include "vectorIterator.hpp"
 #include "vectorConstIterator.hpp"
 #include "../reverse_iterator.hpp"
-#include "isIntegral.hpp"
-#include "enableIf.hpp"
-#include "lexicographicalCompare.hpp"
-#include "equal.hpp"
+#include "../isIntegral.hpp"
+#include "../enableIf.hpp"
+#include "../lexicographicalCompare.hpp"
+#include "../equal.hpp"
 
 #include <iostream>
 #include <vector>
