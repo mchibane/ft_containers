@@ -2,7 +2,6 @@
 #define REVERSE_ITERATOR_HPP
 
 #include "iteratorTraits.hpp"
-#include "vector.hpp"
 
 namespace ft
 {
