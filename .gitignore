@@ -2,4 +2,4 @@ a.out
 .vscode/
 *.out
 containers_test/
-outfiles/*
+outfiles/
