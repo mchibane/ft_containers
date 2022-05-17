@@ -29,10 +29,9 @@ namespace ft
 		explicit reverse_iterator(iterator_type it) : _base(it) {}
 
 		template<class Iter>
-		reverse_iterator(reverse_iterator<Iter> const &rev_it) : _base(rev_it.base()) {}
+		reverse_iterator(const reverse_iterator<Iter> &rev_it) : _base(rev_it.base()) {}
 
 		iterator_type	base(void) const { return (_base); }
-
 
 			/* DEREFERENCE */
 
@@ -84,11 +83,11 @@ namespace ft
 
 			/* ARITHMETICS */
 
-		reverse_iterator	operator+(difference_type n)
+		reverse_iterator	operator+(difference_type n) const
 		{
 			return (reverse_iterator(_base - n));
 		}
-		reverse_iterator	operator-(difference_type n)
+		reverse_iterator	operator-(difference_type n) const
 		{
 			return (reverse_iterator(_base + n));
 		}
@@ -146,8 +145,8 @@ namespace ft
 		return (reverse_iterator<Iterator>(rev_it.base() - n));
 	}
 
-	template <class Iterator>
-	typename reverse_iterator<Iterator>::difference_type operator- (reverse_iterator<Iterator> const &lhs, reverse_iterator<Iterator> const &rhs)
+	template <class Iterator, class Iterator2>
+	typename reverse_iterator<Iterator>::difference_type operator- (reverse_iterator<Iterator> const &lhs, reverse_iterator<Iterator2> const &rhs)
 	{
 		return (rhs.base() - lhs.base());
 	}

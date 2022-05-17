@@ -3,10 +3,14 @@
 
 #include "iteratorTags.hpp"
 #include "vector.hpp"
+#include "vectorConstIterator.hpp"
 #include <cstddef>
 
 namespace ft
 {
+	template<class T>
+	class vectorConstIterator;
+
 	template<class T>
 	class vectorIterator
 	{
@@ -36,18 +40,18 @@ namespace ft
 
 		pointer	getPtr(void) const { return (_ptr); }
 
-		template<typename I>
-		operator vectorIterator<const I>(void)
-		{
-			return (vectorIterator<const I>(_ptr));
-		}
+		// template<typename I>
+		// operator vectorIterator<const I>(void)
+		// {
+		// 	return (vectorIterator<const I>(_ptr));
+		// }
 
 			/* EQUIVALENCES */
 
-		template<class I>
-		bool	operator==(vectorIterator<I> const &rhs) { return (_ptr == rhs.getPtr()); }
-		template<class I>
-		bool	operator!=(vectorIterator<I> const &rhs) { return (!(*this == rhs)); }
+		// template<class I>
+		bool	operator==(ft::vectorConstIterator<T> const &rhs) { return (_ptr == rhs.getPtr()); }
+		// template<class I>
+		bool	operator!=(ft::vectorConstIterator<T> const &rhs) { return (!(*this == rhs)); }
 
 
 			/* DEREFERENCE */
@@ -102,23 +106,23 @@ namespace ft
 
 			/* INEQUALITY */
 
-		template<class I>
-		bool	operator<(vectorIterator<I> const &rhs) const
+		// template<class I>
+		bool	operator<(ft::vectorConstIterator<T> const &rhs) const
 		{
 			return (_ptr < rhs.getPtr());
 		}
-		template<class I>
-		bool	operator>(vectorIterator<I> const &rhs) const
+		// template<class I>
+		bool	operator>(ft::vectorConstIterator<T> const &rhs) const
 		{
 			return (rhs < *this);
 		}
-		template<class I>
-		bool	operator<=(vectorIterator<I> const &rhs) const
+		// template<class I>
+		bool	operator<=(ft::vectorConstIterator<T> const &rhs) const
 		{
 			return (!(rhs < *this));
 		}
-		template<class I>
-		bool	operator>=(vectorIterator<I> const &rhs) const
+		// template<class I>
+		bool	operator>=(ft::vectorConstIterator<T> const &rhs) const
 		{
 			return (!(*this < rhs));
 		}
@@ -153,37 +157,37 @@ namespace ft
 		/* RELATIONAL OPERATORS */
 
 	template<typename T, typename U>
-	bool	operator==( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	bool	operator==( ft::vectorConstIterator<T> const &lhs, vectorIterator<U> const &rhs)
 	{
 		return (lhs.getPtr() == rhs.getPtr());
 	}
 
 	template<typename T, typename U>
-	bool	operator!=( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	bool	operator!=( ft::vectorConstIterator<T> const &lhs, vectorIterator<U> const &rhs)
 	{
 		return (lhs.getPtr() != rhs.getPtr());
 	}
 
 	template<typename T, typename U>
-	bool operator<( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	bool operator<( ft::vectorConstIterator<T> const &lhs, vectorIterator<U> const &rhs)
 	{
 		return (lhs.getPtr() < rhs.getPtr());
 	}
 
 	template<typename T, typename U>
-	bool operator<=( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	bool operator<=( ft::vectorConstIterator<T> const &lhs, vectorIterator<U> const &rhs)
 	{
 		return (lhs.getPtr() <= rhs.getPtr());
 	}
 
 	template<typename T, typename U>
-	bool	operator>( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	bool	operator>( ft::vectorConstIterator<T> const &lhs, vectorIterator<U> const &rhs)
 	{
 		return (lhs.getPtr() > rhs.getPtr());
 	}
 
 	template<typename T, typename U>
-	bool	operator>=( vectorIterator<T> const &lhs, vectorIterator<U> const &rhs)
+	bool	operator>=( ft::vectorConstIterator<T> const &lhs, vectorIterator<U> const &rhs)
 	{
 		return (lhs.getPtr() >= rhs.getPtr());
 	}

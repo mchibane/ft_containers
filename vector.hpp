@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <iterator>
 #include "vectorIterator.hpp"
+#include "vectorConstIterator.hpp"
 #include "reverse_iterator.hpp"
 #include "isIntegral.hpp"
 #include "enableIf.hpp"
@@ -30,7 +31,7 @@ namespace	ft
 		typedef typename allocator_type::size_type				size_type;
 
 		typedef typename ft::vectorIterator<T>					iterator;
-		typedef typename ft::vectorIterator<const T>			const_iterator;
+		typedef typename ft::vectorConstIterator<T>				const_iterator;
 		typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
@@ -126,16 +127,16 @@ namespace	ft
 			/* ITERATORS */
 
 		iterator				begin(void)			{ return (iterator(_ptr)); }
-		const_iterator			begin(void) const	{ return (iterator(_ptr)); }
+		const_iterator			begin(void) const	{ return (const_iterator(_ptr)); }
 
 		iterator				end(void)			{ return (iterator(_ptr + _size)); }
-		const_iterator			end(void) const		{ return (iterator(_ptr + _size)); }
+		const_iterator			end(void) const		{ return (const_iterator(_ptr + _size)); }
 
 		reverse_iterator		rbegin(void)		{ return (reverse_iterator(this->end())); }
-		const_reverse_iterator	rbegin(void) const	{ return (reverse_iterator(this->end())); }
+		const_reverse_iterator	rbegin(void) const	{ return (const_reverse_iterator(this->end())); }
 
-		reverse_iterator		rend(void)			{ return (reverse_iterator(iterator(this->begin()))); }
-		const_reverse_iterator	rend(void) const	{ return (reverse_iterator(iterator(this->begin()))); }
+		reverse_iterator		rend(void)			{ return (reverse_iterator((this->begin()))); }
+		const_reverse_iterator	rend(void) const	{ return (const_reverse_iterator((this->begin()))); }
 
 			/* CAPACITY */
 
