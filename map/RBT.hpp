@@ -48,9 +48,9 @@ namespace ft
 			{
 				_alloc.construct(_sentinel, RBT_node<value_type>());
 				_sentinel->color = BLACK;
-				_sentinel->p = NULL;
-				_sentinel->right = NULL;
-				_sentinel->left = NULL;
+				_sentinel->p = _sentinel;
+				_sentinel->right = _sentinel;
+				_sentinel->left = _sentinel;
 				_root = _sentinel;
 			}
 
@@ -77,6 +77,7 @@ namespace ft
 			{
 				if (_root)
 					printHelper(_root, "", true);
+				std::cout << std::endl;
 			}
 
 				void	print_search(value_type const &val)
@@ -119,13 +120,17 @@ namespace ft
 
 			nodeptr	minimum(nodeptr x)
 			{
-				nodeptr	tmp = x;
+				// nodeptr	tmp = x;
 
-				if (empty())
-					return (_sentinel);
-				while (tmp->left != _sentinel)
-					tmp = tmp->left;
-				return (tmp);
+				// if (empty())
+				// 	return (_sentinel);
+				// while (tmp->left != _sentinel)
+				// 	tmp = tmp->left;
+				// return (tmp);
+
+				if (x->left == _sentinel)
+					return (x);
+				return (minimum(x->left));
 			}
 
 				void	print_max(void)
@@ -140,13 +145,17 @@ namespace ft
 
 			nodeptr	maximum(nodeptr x)
 			{
-				nodeptr	tmp = x;
+				// nodeptr	tmp = x;
 
-				if (empty())
-					return (_sentinel);
-				while (tmp->right != _sentinel)
-					tmp = tmp->right;
-				return (tmp);
+				// if (empty())
+				// 	return (_sentinel);
+				// while (tmp->right != _sentinel)
+				// 	tmp = tmp->right;
+				// return (tmp);
+
+				if (x->right == _sentinel)
+					return (x);
+				return (maximum(x->right));
 			}
 
 			void	valDelete(value_type const &val)
@@ -277,6 +286,61 @@ namespace ft
 					y->left = n;
 				else
 					y->right = n;
+				rbInsertFixup(n);
+			}
+
+			void	rbInsertFixup(nodeptr x)
+			{
+				nodeptr	tmp;
+
+				while (x->p->color == RED)
+				{
+					if (x->p == x->p->p->left)
+					{
+						tmp = x->p->p->right;
+						if (tmp->color == RED)
+						{
+							x->p->color = BLACK;
+							tmp->color = BLACK;
+							x->p->p->color = RED;
+							x = x->p->p;
+						}
+						else
+						{
+							if (x == x->p->right)
+							{
+								x = x->p;
+								leftRotate(x);
+							}
+							x->p->color = BLACK;
+							x->p->p->color = RED;
+							rightRotate(x->p->p);
+						}
+					}
+					else
+					{
+						tmp = x->p->p->left;
+						if (tmp->color == RED)
+						{
+							x->p->color = BLACK;
+							tmp->color = BLACK;
+							x->p->p->color = RED;
+							x = x->p->p;
+						}
+						else
+						{
+							if (x == x->p->left)
+							{
+								x = x->p;
+								rightRotate(x);
+							}
+							x->p->color = BLACK;
+							x->p->p->color = RED;
+							leftRotate(x->p->p);
+						}
+					}
+				}
+				_root->color = BLACK;
 			}
 
 			nodeptr	newNode(value_type const &val)
@@ -288,9 +352,47 @@ namespace ft
 				ret->left = _sentinel;
 				ret->right = _sentinel;
 				ret->p = _sentinel;
+				ret->color = RED;
 				return (ret);
 			}
 
+				/* ROTATIONS */
+
+			void	leftRotate(nodeptr x)
+			{
+				nodeptr	tmp = x->right;
+
+				x->right = tmp->left;
+				if (tmp->left != _sentinel)
+					tmp->left->p = x;
+				tmp->p = x->p;
+				if (x->p == _sentinel)
+					_root = tmp;
+				else if (x == x->p->left)
+					x->p->left = tmp;
+				else
+					x->p->right = tmp;
+				tmp->left = x;
+				x->p = tmp;
+			}
+
+			void	rightRotate(nodeptr x)
+			{
+				nodeptr	tmp = x->left;
+
+				x->left = tmp->right;
+				if (tmp->right != _sentinel)
+					tmp->right->p = x;
+				tmp->p = x->p;
+				if (x->p == _sentinel)
+					_root = tmp;
+				else if (x == x->p->right)
+					x->p->right = tmp;
+				else
+					x->p->left = tmp;
+				tmp->right = x;
+				x->p = tmp;
+			}
 
 				/* PRINT */
 
