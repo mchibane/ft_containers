@@ -57,7 +57,7 @@ namespace ft
 			~RBT(void)
 			{
 				while (_root != _sentinel)
-					treeDelete(_root);
+					rbDelete(_root);
 				_alloc.destroy(_sentinel);
 				_alloc.deallocate(_sentinel, 1);
 			}
@@ -163,45 +163,7 @@ namespace ft
 				nodeptr	to_del = search(val, _root);
 
 				if (to_del != _sentinel)
-					treeDelete(to_del);
-			}
-
-			void	treeDelete(nodeptr x)
-			{
-				nodeptr	tmp;
-
-				if (x->left == _sentinel)
-					transplant(x, x->right);
-				else if (x->right == _sentinel)
-					transplant(x, x->left);
-				else
-				{
-					tmp = minimum(x->right);
-
-					if (tmp->p != x)
-					{
-						transplant(tmp, tmp->right);
-						tmp->right = x->right;
-						tmp->right->p = tmp;
-					}
-					transplant(x, tmp);
-					tmp->left = x->left;
-					tmp->left->p = tmp;
-				}
-				_alloc.destroy(x);
-				_alloc.deallocate(x, 1);
-			}
-
-			void	transplant(nodeptr x, nodeptr y)
-			{
-				if (x->p == _sentinel)
-					_root = y;
-				else if (x == x->p->left)
-					x->p->left = y;
-				else
-					x->p->right = y;
-				if (y != _sentinel)
-					y->p = x->p;
+					rbDelete(to_del);
 			}
 
 				void	print_succ_pred(value_type const &val)
@@ -356,6 +318,134 @@ namespace ft
 				return (ret);
 			}
 
+
+				/* DELETION */
+
+			void	transplant(nodeptr x, nodeptr y)
+			{
+				if (x->p == _sentinel)
+					_root = y;
+				else if (x == x->p->left)
+					x->p->left = y;
+				else
+					x->p->right = y;
+				y->p = x->p;
+			}
+
+			void	rbDelete(nodeptr x)
+			{
+				nodeptr	tmp;
+				nodeptr	save;
+				bool	og_color;
+
+				tmp = x;
+				og_color = tmp->color;
+				if (x->left == _sentinel)
+				{
+					save = x->right;
+					transplant(x, x->right);
+				}
+				else if (x->right == _sentinel)
+				{
+					save = x->left;
+					transplant(x, x->left);
+				}
+				else
+				{
+					tmp = minimum(x->right);
+					og_color = tmp->color;
+					save = tmp->right;
+					if (tmp->p == x)
+						save->p = tmp;
+					else
+					{
+						transplant(tmp, tmp->right);
+						tmp->right = x->right;
+						tmp->right->p = tmp;
+					}
+					transplant(x, tmp);
+					tmp->left = x->left;
+					tmp->left->p = tmp;
+					tmp->color = x->color;
+				}
+				if (og_color == BLACK)
+					rbDelFixup(save);
+				_alloc.destroy(x);
+				_alloc.deallocate(x, 1);
+			}
+
+			void	rbDelFixup(nodeptr x)
+			{
+				nodeptr	tmp;
+
+				while (x != _root && x->color == BLACK)
+				{
+					if (x == x->p->left)
+					{
+						tmp = x->p->right;
+						if (tmp->color == RED)
+						{
+							tmp->color = BLACK;
+							x->p->color = RED;
+							leftRotate(x->p);
+							tmp = x->p->right;
+						}
+						if (tmp->left->color == BLACK && tmp->right->color == BLACK)
+						{
+							tmp->color = RED;
+							x = x->p;
+						}
+						else
+						{
+							if (tmp->right->color == BLACK)
+							{
+								tmp->left->color = BLACK;
+								tmp->color = RED;
+								rightRotate(tmp);
+								tmp = x->p->right;
+							}
+							tmp->color = x->p->color;
+							x->p->color = BLACK;
+							tmp->right->color = BLACK;
+							leftRotate(x->p);
+							x = _root;
+						}
+					}
+					else
+					{
+						tmp = x->p->left;
+						if (tmp->color == RED)
+						{
+							tmp->color = BLACK;
+							x->p->color = RED;
+							rightRotate(x->p);
+							tmp = x->p->left;
+						}
+						if (tmp->right->color == BLACK && tmp->left->color == BLACK)
+						{
+							tmp->color = RED;
+							x = x->p;
+						}
+						else
+						{
+							if (tmp->left->color == BLACK)
+							{
+								tmp->right->color = BLACK;
+								tmp->color = RED;
+								leftRotate(tmp);
+								tmp = x->p->left;
+							}
+							tmp->color = x->p->color;
+							x->p->color = BLACK;
+							tmp->left->color = BLACK;
+							rightRotate(x->p);
+							x = _root;
+						}
+					}
+				}
+				x->color = BLACK;
+			}
+
 				/* ROTATIONS */
 
 			void	leftRotate(nodeptr x)
@@ -394,6 +484,7 @@ namespace ft
 				x->p = tmp;
 			}
 
+
 				/* PRINT */
 
 			void	printHelper(nodeptr root, std::string indent, bool last)
@@ -417,6 +508,7 @@ namespace ft
 					printHelper(root->right, indent, true);
 				}
 			}
+
 
 				/* EQUALITY */
 
