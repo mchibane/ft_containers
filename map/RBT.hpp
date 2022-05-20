@@ -56,10 +56,19 @@ namespace ft
 
 			~RBT(void)
 			{
-				while (_root != _sentinel)
-					rbDelete(_root);
+				rbtClear(_root);
 				_alloc.destroy(_sentinel);
 				_alloc.deallocate(_sentinel, 1);
+			}
+
+			void	rbtClear(nodeptr n)
+			{
+				if (n == _sentinel)
+					return ;
+				rbtClear(n->left);
+				rbtClear(n->right);
+				_alloc.destroy(n);
+				_alloc.deallocate(n, 1);
 			}
 
 			bool	empty(void)
@@ -222,6 +231,9 @@ namespace ft
 				}
 				return (y);
 			}
+
+			nodeptr	sentinel(void) const { return (_sentinel); }
+			nodeptr	root(void) const { return (_root); }
 
 			/* HELPERS FUNCTIONS FOR RBT OPERATIONS */
 			private:
