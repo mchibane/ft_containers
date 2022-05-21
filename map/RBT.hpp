@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <memory>
+#include "map.hpp"
 
 #include <iostream>
 
@@ -21,7 +22,7 @@ namespace ft
 		struct RBT_node	*p;
 
 		RBT_node(void) : color (RED), key(T()), right(NULL), left(NULL), p(NULL) {}
-		RBT_node(T const &x) : color (RED), key(x), right(NULL), left(NULL), p(NULL) {}
+		RBT_node(T const &val) : color (RED), key(val), right(NULL), left(NULL), p(NULL) {}
 	};
 
 	template< class T, class Comp = std::less<T>, class Alloc = std::allocator<T> >
@@ -61,19 +62,18 @@ namespace ft
 				_alloc.deallocate(_sentinel, 1);
 			}
 
-			void	rbtClear(nodeptr n)
-			{
-				if (n == _sentinel)
-					return ;
-				rbtClear(n->left);
-				rbtClear(n->right);
-				_alloc.destroy(n);
-				_alloc.deallocate(n, 1);
-			}
 
 			bool	empty(void)
 			{
 				return (_root == _sentinel);
+			}
+
+
+				/* EQUALITY */
+
+			bool	equal(value_type const &x, value_type const &y)
+			{
+				return (!_comp(x, y) && !_comp(y, x));
 			}
 
 			void	insert(value_type const &val)
@@ -234,6 +234,8 @@ namespace ft
 
 			nodeptr	sentinel(void) const { return (_sentinel); }
 			nodeptr	root(void) const { return (_root); }
+
+			void	clear(void) { rbtClear(_root); }
 
 			/* HELPERS FUNCTIONS FOR RBT OPERATIONS */
 			private:
@@ -522,11 +524,16 @@ namespace ft
 			}
 
 
-				/* EQUALITY */
+				/* CLEAR TREE */
 
-			bool	equal(value_type const &x, value_type const &y)
+			void	rbtClear(nodeptr n)
 			{
-				return (!_comp(x, y) && !_comp(y, x));
+				if (n == _sentinel)
+					return ;
+				rbtClear(n->left);
+				rbtClear(n->right);
+				_alloc.destroy(n);
+				_alloc.deallocate(n, 1);
 			}
 
 	}; // class RBT
