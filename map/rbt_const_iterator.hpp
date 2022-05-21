@@ -8,24 +8,21 @@
 
 namespace ft
 {
-	// template< class T, class Comp = std::less<T> >
-	// class rbt_iterator;
-
 	template<class T, class Comp = std::less<T> >
 	class rbt_const_iterator
 	{
 		public:
-			typedef const T								value_type;
-			typedef const T*							pointer;
-			typedef const T&							reference;
-			typedef Comp								comp;
+			typedef const T						value_type;
+			typedef const T*					pointer;
+			typedef const T&					reference;
+			typedef Comp						comp;
 
 			typedef typename ft::RBT<T, comp>	tree_type;
-			typedef tree_type*							tree_ptr;
-			typedef tree_type&							tree_ref;
-			typedef typename tree_type::nodeptr			nodeptr;
+			typedef tree_type*					tree_ptr;
+			typedef tree_type&					tree_ref;
+			typedef typename tree_type::nodeptr	nodeptr;
 
-			typedef bidirectional_iterator_tag			iterator_category;
+			typedef bidirectional_iterator_tag	iterator_category;
 
 		private:
 			tree_ref	_tree;
@@ -47,6 +44,9 @@ namespace ft
 				}
 				return (*this);
 			}
+
+			tree_ref	getTree(void) const { return (_tree); }
+			nodeptr		getNode(void) const { return (_node); }
 
 			bool	operator==(rbt_const_iterator const &rhs) const { return (_node == rhs._node); }
 			bool	operator!=(rbt_const_iterator const &rhs) const { return (!(*this == rhs)); }
