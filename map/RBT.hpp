@@ -164,6 +164,7 @@ namespace ft
 					return (x);
 				return (maximum(x->right));
 			}
+
 			void	valDelete(value_type const &val)
 			{
 				nodeptr	to_del = search(val, _root);
@@ -171,6 +172,7 @@ namespace ft
 				if (to_del != _sentinel)
 					rbDelete(to_del);
 			}
+			void	nodeDel(nodeptr x) { rbDelete(x); }
 
 				void	print_succ_pred(value_type const &val)
 				{

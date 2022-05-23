@@ -62,12 +62,14 @@ namespace ft
 
 				/* CONSTRUCTORS & DESTRUCTORS */
 
+			// Default
 			explicit map(key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) :
 					_alloc(alloc),
 					_tree(RBT<value_type, value_compare, allocator_type>()),
 					_size(0),
 					_comp(comp) {}
 
+			// Range
 			template<class InputIterator>
 			map(InputIterator first, InputIterator last, key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) :
 					_alloc(alloc),
@@ -78,6 +80,7 @@ namespace ft
 				insert(first, last);
 			}
 
+			// Copy
 			map(map const &x) :
 					_alloc(x.get_allocator()),
 					_tree(tree_type()),
@@ -131,6 +134,7 @@ namespace ft
 
 				/* MODIFIERS */
 
+			// Single element
 			ft::pair<iterator, bool>	insert(value_type const &val)
 			{
 				nodeptr	to_search = _tree.search(val, _tree.root());
@@ -141,6 +145,7 @@ namespace ft
 				return (ft::make_pair<iterator, bool>(iterator(&_tree, _tree.insert(val)), true));
 			}
 
+			// With hint
 			iterator					insert(iterator position, value_type const &val)
 			{
 				nodeptr	to_search = _tree.search(val, _tree.root());
@@ -152,6 +157,7 @@ namespace ft
 				return (iterator(&_tree, _tree.insert(val)));
 			}
 
+			// Range
 			template<class InputIterator>
 			void						insert(InputIterator first, InputIterator last)
 			{
@@ -162,6 +168,42 @@ namespace ft
 					_size++;
 				}
 			}
+
+			void	erase(iterator position)
+			{
+				_tree.rbDelete(*position);
+				_size--;
+			}
+
+			size_type	erase(key_type const &k)
+			{
+				value_type	val = ft::make_pair(k, mapped_type());
+				nodeptr		to_search = _tree.search(val, _tree.root());
+
+				if (to_search != _tree.sentinel())
+				{
+					_tree.rbDelete(to_search);
+					_size--;
+					return (1);
+				}
+				return (0);
+			}
+
+			void	erase(iterator first, iterator last)
+			{
+				while (first != last)
+				{
+					erase(first);
+					first++;
+				}
+			}
+
+			// void	swap(map &x)
+			// {
+			// 	map	tmp(*this);
+
+			// 	_alloc = x.ge
+			// }
 
 			void	clear(void)
 			{
