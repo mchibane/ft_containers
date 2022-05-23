@@ -232,7 +232,9 @@ namespace ft
 			}
 
 			nodeptr	sentinel(void) const { return (_sentinel); }
+			void	setSentinel(nodeptr senti) { _sentinel = senti; }
 			nodeptr	root(void) const { return (_root); }
+			void	setRoot(nodeptr root) { _root = root; }
 
 			void	clear(void) { rbtClear(_root); }
 

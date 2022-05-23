@@ -65,7 +65,7 @@ namespace ft
 			// Default
 			explicit map(key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) :
 					_alloc(alloc),
-					_tree(RBT<value_type, value_compare, allocator_type>()),
+					_tree(tree_type()),
 					_size(0),
 					_comp(comp) {}
 
@@ -198,12 +198,23 @@ namespace ft
 				}
 			}
 
-			// void	swap(map &x)
-			// {
-			// 	map	tmp(*this);
+			void	swap(map &x)
+			{
+				nodeptr		root = _tree.root();
+				nodeptr		senti = _tree.sentinel();
+				size_type	size_tmp = _size;
+				key_compare	k_comp = _comp;
 
-			// 	_alloc = x.ge
-			// }
+				_tree.setRoot(x._tree.root());
+				_tree.setSentinel(x._tree.sentinel());
+				_size = x.size();
+				_comp = x._comp;
+
+				x._tree.setRoot(root);
+				x._tree.setSentinel(senti);
+				x._size = size_tmp;
+				x._comp = k_comp;
+			}
 
 			void	clear(void)
 			{
