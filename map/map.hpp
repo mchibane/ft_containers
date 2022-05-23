@@ -120,6 +120,15 @@ namespace ft
 			size_type	size(void) const { return (_size); }
 			size_type	max_size(void) const { return (_tree.max_size()); }
 
+
+				/* ELEMENT ACCESS */
+
+			mapped_type	&operator[](key_type const &k)
+			{
+				return ( ( *( ( insert( ft::make_pair( k, mapped_type() ) ) ).first ) ).second );
+			}
+
+
 				/* MODIFIERS */
 
 			ft::pair<iterator, bool>	insert(value_type const &val)
