@@ -29,6 +29,7 @@ namespace ft
 			nodeptr		_node;
 
 		public:
+			rbt_const_iterator(void) : _tree(NULL), _node(NULL) {}
 			rbt_const_iterator(rbt_const_iterator const &x) : _tree(x._tree), _node(x._node) {}
 			rbt_const_iterator(ft::rbt_iterator<T, Comp> const &x) : _tree(x.getTree()), _node(x.getNode()) {}
 			rbt_const_iterator(tree_ptr tr, nodeptr node) : _tree(tr), _node(node) {}

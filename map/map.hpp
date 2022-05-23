@@ -251,7 +251,48 @@ namespace ft
 				return (end());
 			}
 
+			iterator		lower_bound(key_type const &k)
+			{
+				iterator	it = begin();
+				while (_comp(it->first, k) && it != end())
+					it++;
+				return (it);
+			}
+			const_iterator	lower_bound(key_type const &k) const
+			{
+				const_iterator	it = begin();
+				while (_comp(it->first, k) && it != end())
+					it++;
+				return (it);
+			}
 
+			iterator		upper_bound(key_type const &k)
+			{
+				iterator	it = begin();
+				while (!_comp(k, it->first) && it != end())
+					it++;
+				return (it);
+			}
+			const_iterator	upper_bound(key_type const &k) const
+			{
+				const_iterator	it = begin();
+				while (!_comp(k, it->first) && it != end())
+					it++;
+				return (it);
+			}
+
+			ft::pair<iterator, iterator>				equal_range(key_type const &k)
+			{
+				iterator	lo = lower_bound(k);
+				iterator	up = upper_bound(k);
+				return (ft::make_pair(lo, up));
+			}
+			ft::pair<const_iterator, const_iterator>	equal_range(key_type const &k) const
+			{
+				const_iterator	lo = lower_bound(k);
+				const_iterator	up = upper_bound(k);
+				return (ft::make_pair(lo, up));
+			}
 				/* ALLOCATOR */
 
 			allocator_type	get_allocator(void) const { return (_alloc); }
