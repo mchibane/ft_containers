@@ -68,7 +68,36 @@ namespace ft
 					_size(0),
 					_comp(comp) {}
 
+			template<class InputIterator>
+			map(InputIterator first, InputIterator last, key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) :
+					_alloc(alloc),
+					_tree(tree_type()),
+					_size(0),
+					_comp(comp)
+			{
+				insert(first, last);
+			}
+
+			map(map const &x) :
+					_alloc(x.get_allocator()),
+					_tree(tree_type()),
+					_size(0),
+					_comp(x._comp)
+			{
+				insert(x.begin(), x.end());
+			}
+
 			~map(void) {}
+
+			map	&operator=(map const &x)
+			{
+				if (this != &x)
+				{
+					clear();
+					insert(x.begin(), x.end());
+				}
+				return (*this);
+			}
 
 				/* ITERATORS */
 
@@ -85,6 +114,12 @@ namespace ft
 			const_reverse_iterator	rend(void) const	{ return (const_reverse_iterator(begin())); }
 
 
+				/* CAPACITY */
+
+			bool		empty(void) const { return (_tree.empty()); }
+			size_type	size(void) const { return (_size); }
+			size_type	max_size(void) const { return (_tree.max_size()); }
+
 				/* MODIFIERS */
 
 			ft::pair<iterator, bool>	insert(value_type const &val)
@@ -93,6 +128,7 @@ namespace ft
 
 				if (to_search != _tree.sentinel())
 					return (ft::make_pair<iterator, bool>(iterator(&_tree, to_search), false));
+				_size++;
 				return (ft::make_pair<iterator, bool>(iterator(&_tree, _tree.insert(val)), true));
 			}
 
@@ -103,6 +139,7 @@ namespace ft
 				(void)position;
 				if (to_search != _tree.sentinel())
 					return (iterator(&_tree, to_search));
+				_size++;
 				return (iterator(&_tree, _tree.insert(val)));
 			}
 
@@ -113,8 +150,20 @@ namespace ft
 				{
 					insert(*first);
 					first++;
+					_size++;
 				}
 			}
+
+			void	clear(void)
+			{
+				_size = 0;
+				_tree.clear();
+			}
+
+
+				/* ALLOCATOR */
+
+			allocator_type	get_allocator(void) const { return (_alloc); }
 
 	}; // class map
 }; //namespace ft

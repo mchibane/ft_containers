@@ -30,7 +30,7 @@ namespace ft
 		public:
 			rbt_iterator(void) : _tree(NULL), _node(NULL) {  }
 			rbt_iterator(rbt_iterator const &x) :  _tree(x._tree), _node(x._node) {}
-			rbt_iterator(tree_ptr tr, nodeptr node) : _tree(tr), _node(node) {}
+			rbt_iterator(tree_ptr const tr, nodeptr const node) : _tree(tr), _node(node) {}
 
 			~rbt_iterator(void) {}
 

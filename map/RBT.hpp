@@ -131,14 +131,12 @@ namespace ft
 
 			nodeptr	minimum(nodeptr x)
 			{
-				// nodeptr	tmp = x;
-
-				// if (empty())
-				// 	return (_sentinel);
-				// while (tmp->left != _sentinel)
-				// 	tmp = tmp->left;
-				// return (tmp);
-
+				if (x->left == _sentinel)
+					return (x);
+				return (minimum(x->left));
+			}
+			nodeptr	minimum(nodeptr x) const
+			{
 				if (x->left == _sentinel)
 					return (x);
 				return (minimum(x->left));
@@ -156,19 +154,16 @@ namespace ft
 
 			nodeptr	maximum(nodeptr x)
 			{
-				// nodeptr	tmp = x;
-
-				// if (empty())
-				// 	return (_sentinel);
-				// while (tmp->right != _sentinel)
-				// 	tmp = tmp->right;
-				// return (tmp);
-
 				if (x->right == _sentinel)
 					return (x);
 				return (maximum(x->right));
 			}
-
+			nodeptr	maximum(nodeptr x) const
+			{
+				if (x->right == _sentinel)
+					return (x);
+				return (maximum(x->right));
+			}
 			void	valDelete(value_type const &val)
 			{
 				nodeptr	to_del = search(val, _root);
@@ -202,7 +197,7 @@ namespace ft
 					std::cout << std::endl;
 				}
 
-			nodeptr	successor(nodeptr x)
+			nodeptr	successor(nodeptr x) const
 			{
 				nodeptr	tmp = x;
 				nodeptr	y;
@@ -218,7 +213,7 @@ namespace ft
 				return (y);
 			}
 
-			nodeptr	predecessor(nodeptr x)
+			nodeptr	predecessor(nodeptr x) const
 			{
 				nodeptr	tmp = x;
 				nodeptr	y;
@@ -238,6 +233,8 @@ namespace ft
 			nodeptr	root(void) const { return (_root); }
 
 			void	clear(void) { rbtClear(_root); }
+
+			size_t	max_size(void) const { return (_alloc.max_size()); }
 
 			/* HELPERS FUNCTIONS FOR RBT OPERATIONS */
 			private:
