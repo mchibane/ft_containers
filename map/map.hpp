@@ -4,6 +4,7 @@
 #include <functional>
 #include <cstddef>
 #include "../pair.hpp"
+#include "../reverse_iterator.hpp"
 #include "rbt_iterator.hpp"
 #include "rbt_const_iterator.hpp"
 #include "RBT.hpp"
@@ -45,14 +46,22 @@ namespace ft
 
 			typedef typename ft::rbt_iterator<value_type, value_compare>			iterator;
 			typedef typename ft::rbt_const_iterator<value_type, value_compare>		const_iterator;
+			typedef typename ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
 		protected:
+			typedef typename ft::RBT< value_type, value_compare, allocator_type>	tree_type;
+			typedef typename tree_type::nodeptr										nodeptr;
+
 			allocator_type										_alloc;
-			RBT< value_type, value_compare, allocator_type >	_tree;
+			tree_type											_tree;
 			size_type											_size;
 			key_compare											_comp;
 
 		public:
+
+				/* CONSTRUCTORS & DESTRUCTORS */
+
 			explicit map(key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) :
 					_alloc(alloc),
 					_tree(RBT<value_type, value_compare, allocator_type>()),
@@ -61,13 +70,51 @@ namespace ft
 
 			~map(void) {}
 
-			void	insert(value_type const &x) { _tree.insert(x); }
+				/* ITERATORS */
 
-			iterator		begin(void) { return (iterator(_tree, _tree.minimum(_tree.root()))); }
-			const_iterator	begin(void) const { return (const_iterator(_tree, _tree.minimum(_tree.root()))); }
+			iterator				begin(void)			{ return (iterator(&_tree, _tree.minimum(_tree.root()))); }
+			const_iterator			begin(void) const	{ return (const_iterator(&_tree, _tree.minimum(_tree.root()))); }
 
-			iterator		end(void) { return (iterator(_tree, _tree.sentinel())); }
-			const_iterator	end(void) const { return (const_iterator(_tree, _tree.sentinel())); }
+			iterator				end(void)			{ return (iterator(&_tree, _tree.sentinel())); }
+			const_iterator			end(void) const		{ return (const_iterator(&_tree, _tree.sentinel())); }
+
+			reverse_iterator		rbegin(void)		{ return (reverse_iterator(end())); }
+			const_reverse_iterator	rbegin(void) const	{ return (const_reverse_iterator(end())); }
+
+			reverse_iterator		rend(void)			{ return (reverse_iterator(begin())); }
+			const_reverse_iterator	rend(void) const	{ return (const_reverse_iterator(begin())); }
+
+
+				/* MODIFIERS */
+
+			ft::pair<iterator, bool>	insert(value_type const &val)
+			{
+				nodeptr	to_search = _tree.search(val, _tree.root());
+
+				if (to_search != _tree.sentinel())
+					return (ft::make_pair<iterator, bool>(iterator(&_tree, to_search), false));
+				return (ft::make_pair<iterator, bool>(iterator(&_tree, _tree.insert(val)), true));
+			}
+
+			iterator					insert(iterator position, value_type const &val)
+			{
+				nodeptr	to_search = _tree.search(val, _tree.root());
+
+				(void)position;
+				if (to_search != _tree.sentinel())
+					return (iterator(&_tree, to_search));
+				return (iterator(&_tree, _tree.insert(val)));
+			}
+
+			template<class InputIterator>
+			void						insert(InputIterator first, InputIterator last)
+			{
+				while (first != last)
+				{
+					insert(*first);
+					first++;
+				}
+			}
 
 	}; // class map
 }; //namespace ft

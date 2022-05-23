@@ -24,12 +24,13 @@ namespace ft
 			typedef bidirectional_iterator_tag			iterator_category;
 
 		private:
-			tree_ref	_tree;
+			tree_ptr	_tree;
 			nodeptr		_node;
 
 		public:
+			rbt_iterator(void) : _tree(NULL), _node(NULL) {  }
 			rbt_iterator(rbt_iterator const &x) :  _tree(x._tree), _node(x._node) {}
-			rbt_iterator(tree_ref tr, nodeptr node) : _tree(tr), _node(node) {}
+			rbt_iterator(tree_ptr tr, nodeptr node) : _tree(tr), _node(node) {}
 
 			~rbt_iterator(void) {}
 
@@ -43,7 +44,7 @@ namespace ft
 				return (*this);
 			}
 
-			tree_ref	getTree(void) const { return (_tree); }
+			tree_ptr	getTree(void) const { return (_tree); }
 			nodeptr		getNode(void) const { return (_node); }
 
 			bool	operator==(rbt_iterator const &rhs) const { return (_node == rhs._node); }
@@ -54,7 +55,7 @@ namespace ft
 
 			rbt_iterator	&operator++(void)
 			{
-				_node = _tree.successor(_node);
+				_node = _tree->successor(_node);
 				return (*this);
 			}
 			rbt_iterator	operator++(int)
@@ -67,7 +68,7 @@ namespace ft
 
 			rbt_iterator	operator--(void)
 			{
-				_node = _tree.predecessor(_node);
+				_node = _tree->predecessor(_node);
 				return (*this);
 			}
 			rbt_iterator	&operator--(int)

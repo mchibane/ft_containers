@@ -76,10 +76,12 @@ namespace ft
 				return (!_comp(x, y) && !_comp(y, x));
 			}
 
-			void	insert(value_type const &val)
+			nodeptr	insert(value_type const &val)
 			{
 				nodeptr	tmp = newNode(val);
+
 				insertNode(tmp);
+				return (tmp);
 			}
 
 			void	printTree(void)
