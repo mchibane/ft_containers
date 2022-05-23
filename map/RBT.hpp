@@ -63,7 +63,7 @@ namespace ft
 			}
 
 
-			bool	empty(void)
+			bool	empty(void) const
 			{
 				return (_root == _sentinel);
 			}
@@ -71,7 +71,7 @@ namespace ft
 
 				/* EQUALITY */
 
-			bool	equal(value_type const &x, value_type const &y)
+			bool	equal(value_type const &x, value_type const &y) const
 			{
 				return (!_comp(x, y) && !_comp(y, x));
 			}
@@ -103,7 +103,7 @@ namespace ft
 						std::cout << "Value Found : " << tmp->key << std::endl;
 				}
 
-			nodeptr	search(value_type const &val, nodeptr x)
+			nodeptr	search(value_type const &val, nodeptr x) const
 			{
 				nodeptr	tmp = x;
 

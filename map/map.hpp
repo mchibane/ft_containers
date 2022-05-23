@@ -165,7 +165,6 @@ namespace ft
 				{
 					insert(*first);
 					first++;
-					_size++;
 				}
 			}
 
@@ -220,6 +219,36 @@ namespace ft
 			{
 				_size = 0;
 				_tree.clear();
+			}
+
+
+				/* OBSERVERS */
+
+			key_compare		key_comp(void) const { return (_comp); }
+
+			value_compare	value_comp(void) const { return (value_compare()); }
+
+
+				/* OPERATIONS */
+
+			iterator		find(key_type const &k)
+			{
+				value_type	val = ft::make_pair(k, mapped_type());
+				nodeptr		s = _tree.search(val, _tree.root());
+
+				if (s != _tree.sentinel())
+					return (iterator(&_tree, s));
+				return (end());
+			}
+
+			const_iterator	find(key_type const &k) const
+			{
+				value_type	val = ft::make_pair(k, mapped_type());
+				nodeptr		s = _tree.search(val, _tree.root());
+
+				if (s != _tree.sentinel())
+					return (const_iterator(&_tree, s));
+				return (end());
 			}
 
 
