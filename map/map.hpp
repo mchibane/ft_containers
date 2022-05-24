@@ -181,7 +181,7 @@ namespace ft
 
 				if (to_search != _tree.sentinel())
 				{
-					_tree.valDelete(to_search);
+					_tree.valDelete(val);
 					_size--;
 					return (1);
 				}
@@ -246,6 +246,16 @@ namespace ft
 				if (s != _tree.sentinel())
 					return (const_iterator(&_tree, s));
 				return (end());
+			}
+
+			size_type	count(key_type const &k) const
+			{
+				value_type	val = ft::make_pair(k, mapped_type());
+				nodeptr		s = _tree.search(val, _tree.root());
+
+				if (s != _tree.sentinel())
+					return (1);
+				return (0);
 			}
 
 			iterator		lower_bound(key_type const &k)
