@@ -170,7 +170,7 @@ namespace ft
 
 			void	erase(iterator position)
 			{
-				_tree.rbDelete(*position);
+				_tree.valDelete(*position);
 				_size--;
 			}
 
@@ -181,7 +181,7 @@ namespace ft
 
 				if (to_search != _tree.sentinel())
 				{
-					_tree.rbDelete(to_search);
+					_tree.valDelete(to_search);
 					_size--;
 					return (1);
 				}
@@ -191,10 +191,7 @@ namespace ft
 			void	erase(iterator first, iterator last)
 			{
 				while (first != last)
-				{
-					erase(first);
-					first++;
-				}
+					erase(first++);
 			}
 
 			void	swap(map &x)

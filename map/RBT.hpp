@@ -221,7 +221,7 @@ namespace ft
 				nodeptr	y;
 
 				if (tmp->left != _sentinel)
-					return (minimum(tmp->left));
+					return (maximum(tmp->left));
 				y = tmp->p;
 				while (y != _sentinel && tmp == y->left)
 				{

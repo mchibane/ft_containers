@@ -55,10 +55,7 @@ namespace ft
 
 			rbt_iterator	&operator++(void)
 			{
-				if (_node == _tree->sentinel())
-					_node = _tree->minimum(_tree->root());
-				else
-					_node = _tree->successor(_node);
+				_node = _tree->successor(_node);
 				return (*this);
 			}
 			rbt_iterator	operator++(int)
