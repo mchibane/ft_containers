@@ -3,8 +3,11 @@
 
 #include <functional>
 #include <cstddef>
+#include <algorithm>
 #include "../pair.hpp"
 #include "../reverse_iterator.hpp"
+#include "../equal.hpp"
+#include "../lexicographicalCompare.hpp"
 #include "rbt_iterator.hpp"
 #include "rbt_const_iterator.hpp"
 #include "RBT.hpp"
@@ -305,6 +308,56 @@ namespace ft
 			allocator_type	get_allocator(void) const { return (_alloc); }
 
 	}; // class map
+
+	/*******************/
+	/* NON MEMBER FCTS */
+	/*******************/
+
+	/* SWAP */
+
+	template<class Key, class T, class Compare, class Alloc>
+	void	swap(ft::map<Key, T, Compare, Alloc> &lhs, ft::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
+
+
+	/* RELATIONAL OPERATORS */
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool	operator==(ft::map<Key, T, Compare, Alloc> const &lhs, ft::map<Key, T, Compare, Alloc> const &rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool	operator<(ft::map<Key, T, Compare, Alloc> const &lhs, ft::map<Key, T, Compare, Alloc> const &rhs)
+	{
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool	operator!=(ft::map<Key, T, Compare, Alloc> const &lhs, ft::map<Key, T, Compare, Alloc> const &rhs)
+	{
+		return (!(lhs == rhs));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool	operator>(ft::map<Key, T, Compare, Alloc> const &lhs, ft::map<Key, T, Compare, Alloc> const &rhs)
+	{
+		return (rhs < lhs);
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool	operator<=(ft::map<Key, T, Compare, Alloc> const &lhs, ft::map<Key, T, Compare, Alloc> const &rhs)
+	{
+		return (!(rhs < lhs));
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool	operator>=(ft::map<Key, T, Compare, Alloc> const &lhs, ft::map<Key, T, Compare, Alloc> const &rhs)
+	{
+		return (!(lhs < rhs));
+	}
 }; //namespace ft
 
 #endif
