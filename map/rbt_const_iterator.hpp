@@ -18,22 +18,21 @@ namespace ft
 			typedef Comp						comp;
 
 			typedef typename ft::RBT<T, comp> const	tree_type;
-			typedef tree_type*					tree_ptr;
-			typedef tree_type&					tree_ref;
 			typedef typename tree_type::nodeptr	nodeptr;
 
 			typedef bidirectional_iterator_tag	iterator_category;
 			typedef ptrdiff_t					difference_type;
 
 		private:
-			tree_ptr	_tree;
-			nodeptr		_node;
+			nodeptr	_root;
+			nodeptr	_sentinel;
+			nodeptr	_node;
 
 		public:
-			rbt_const_iterator(void) : _tree(NULL), _node(NULL) {}
-			rbt_const_iterator(rbt_const_iterator const &x) : _tree(x._tree), _node(x._node) {}
-			rbt_const_iterator(ft::rbt_iterator<T, Comp> const &x) : _tree(x.getTree()), _node(x.getNode()) {}
-			rbt_const_iterator(tree_ptr tr, nodeptr node) : _tree(tr), _node(node) {}
+			rbt_const_iterator(void) : _root(NULL), _sentinel(NULL), _node(NULL) {}
+			rbt_const_iterator(rbt_const_iterator const &x) : _root(x._root), _sentinel(x._sentinel), _node(x._node) {}
+			rbt_const_iterator(ft::rbt_iterator<T, Comp> const &x) : _root(x.getRoot()), _sentinel(x.getSenti()), _node(x.getNode()) {}
+			rbt_const_iterator(nodeptr const r, nodeptr const tr, nodeptr const node) : _root(r), _sentinel(tr), _node(node) {}
 
 			~rbt_const_iterator(void) {}
 
@@ -41,14 +40,16 @@ namespace ft
 			{
 				if (this != &rhs)
 				{
-					_tree = rhs._tree;
+					_root = rhs._root;
+					_sentinel = rhs._sentinel;
 					_node = rhs._node;
 				}
 				return (*this);
 			}
 
-			tree_ptr	getTree(void) const { return (_tree); }
-			nodeptr		getNode(void) const { return (_node); }
+			nodeptr	getSenti(void) const { return (_sentinel); }
+			nodeptr	getRoot(void) const { return (_root); }
+			nodeptr	getNode(void) const { return (_node); }
 
 			bool	operator==(rbt_const_iterator const &rhs) const { return (_node == rhs._node); }
 			bool	operator!=(rbt_const_iterator const &rhs) const { return (!(*this == rhs)); }
@@ -58,10 +59,24 @@ namespace ft
 
 			rbt_const_iterator	&operator++(void)
 			{
-				if (_node == _tree->sentinel())
-					_node = _tree->minimum(_tree->root());
-				else
-					_node = _tree->successor(_node);
+				nodeptr	tmp;
+
+				if (_node->right != _sentinel)
+				{
+					_node = _node->right;
+					while (_node->left != _sentinel)
+					{
+						_node = _node->left;
+					}
+					return (*this);
+				}
+				tmp = _node->p;
+				while (tmp != _sentinel && _node == tmp->right)
+				{
+					_node = tmp;
+					tmp = tmp->p;
+				}
+				_node = tmp;
 				return (*this);
 			}
 			rbt_const_iterator	operator++(int)
@@ -74,10 +89,29 @@ namespace ft
 
 			rbt_const_iterator	&operator--(void)
 			{
-				if (_node == _tree->sentinel())
-					_node = _tree->maximum(_tree->root());
-				else
-					_node = _tree->predecessor(_node);
+				nodeptr	tmp;
+
+				if (_node == _sentinel)
+				{
+					_node = _root;
+					while (_node->right != _sentinel)
+						_node = _node->right;
+					return (*this);
+				}
+				if (_node->left != _sentinel)
+				{
+					_node = _node->left;
+					while (_node->right != _sentinel)
+						_node = _node->right;
+					return (*this);
+				}
+				tmp = _node->p;
+				while (tmp != _sentinel && _node == tmp->left)
+				{
+					_node = tmp;
+					tmp = tmp->p;
+				}
+				_node = tmp;
 				return (*this);
 			}
 			rbt_const_iterator	operator--(int)

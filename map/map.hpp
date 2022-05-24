@@ -107,11 +107,11 @@ namespace ft
 
 				/* ITERATORS */
 
-			iterator				begin(void)			{ return (iterator(&_tree, _tree.minimum(_tree.root()))); }
-			const_iterator			begin(void) const	{ return (const_iterator(&_tree, _tree.minimum(_tree.root()))); }
+			iterator				begin(void)			{ return (iterator(_tree.root(), _tree.sentinel(), _tree.minimum(_tree.root()))); }
+			const_iterator			begin(void) const	{ return (const_iterator(_tree.root(), _tree.sentinel(), _tree.minimum(_tree.root()))); }
 
-			iterator				end(void)			{ return (iterator(&_tree, _tree.sentinel())); }
-			const_iterator			end(void) const		{ return (const_iterator(&_tree, _tree.sentinel())); }
+			iterator				end(void)			{ return (iterator(_tree.root(), _tree.sentinel(), _tree.sentinel())); }
+			const_iterator			end(void) const		{ return (const_iterator(_tree.root(), _tree.sentinel(), _tree.sentinel())); }
 
 			reverse_iterator		rbegin(void)		{ return (reverse_iterator(end())); }
 			const_reverse_iterator	rbegin(void) const	{ return (const_reverse_iterator(end())); }
@@ -143,9 +143,9 @@ namespace ft
 				nodeptr	to_search = _tree.search(val, _tree.root());
 
 				if (to_search != _tree.sentinel())
-					return (ft::make_pair<iterator, bool>(iterator(&_tree, to_search), false));
+					return (ft::make_pair<iterator, bool>(iterator(_tree.root(), _tree.sentinel(), to_search), false));
 				_size++;
-				return (ft::make_pair<iterator, bool>(iterator(&_tree, _tree.insert(val)), true));
+				return (ft::make_pair<iterator, bool>(iterator(_tree.root(), _tree.sentinel(), _tree.insert(val)), true));
 			}
 
 			// With hint
@@ -155,9 +155,9 @@ namespace ft
 
 				(void)position;
 				if (to_search != _tree.sentinel())
-					return (iterator(&_tree, to_search));
+					return (iterator(_tree.root(), _tree.sentinel(), to_search));
 				_size++;
-				return (iterator(&_tree, _tree.insert(val)));
+				return (iterator(_tree.root(), _tree.sentinel(), _tree.insert(val)));
 			}
 
 			// Range
@@ -237,7 +237,7 @@ namespace ft
 				nodeptr		s = _tree.search(val, _tree.root());
 
 				if (s != _tree.sentinel())
-					return (iterator(&_tree, s));
+					return (iterator(_tree.root(), _tree.sentinel(), s));
 				return (end());
 			}
 
@@ -247,7 +247,7 @@ namespace ft
 				nodeptr		s = _tree.search(val, _tree.root());
 
 				if (s != _tree.sentinel())
-					return (const_iterator(&_tree, s));
+					return (const_iterator(_tree.root(), _tree.sentinel(), s));
 				return (end());
 			}
 
