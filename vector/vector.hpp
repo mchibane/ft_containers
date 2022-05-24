@@ -165,7 +165,7 @@ namespace	ft
 			pointer	tmp;
 
 			if (n > max_size())
-				throw (std::length_error("Length error: ft::vector: reserve request is too large"));
+				throw (std::length_error("vector::reserve"));
 			if (n <= _capacity)
 				return ;
 			tmp = _ptr;
