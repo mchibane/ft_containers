@@ -55,7 +55,10 @@ namespace ft
 
 			rbt_iterator	&operator++(void)
 			{
-				_node = _tree->successor(_node);
+				if (_node == _tree->sentinel())
+					_node = _tree->minimum(_tree->root());
+				else
+					_node = _tree->successor(_node);
 				return (*this);
 			}
 			rbt_iterator	operator++(int)
@@ -66,12 +69,15 @@ namespace ft
 				return (tmp);
 			}
 
-			rbt_iterator	operator--(void)
+			rbt_iterator	&operator--(void)
 			{
-				_node = _tree->predecessor(_node);
+				if (_node == _tree->sentinel())
+					_node = _tree->maximum(_tree->root());
+				else
+					_node = _tree->predecessor(_node);
 				return (*this);
 			}
-			rbt_iterator	&operator--(int)
+			rbt_iterator	operator--(int)
 			{
 				rbt_iterator	tmp = *this;
 

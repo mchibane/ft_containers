@@ -537,6 +537,7 @@ namespace ft
 				rbtClear(n->right);
 				_alloc.destroy(n);
 				_alloc.deallocate(n, 1);
+				_root = _sentinel;
 			}
 
 	}; // class RBT
