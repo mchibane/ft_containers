@@ -221,6 +221,11 @@ namespace	ft
 				_alloc.construct(_ptr + i, *first);
 				first++;
 			}
+			if (n < _size)
+			{
+				for (size_type i = n; i < _size; i++)
+					_alloc.destroy(_ptr + i);
+			}
 			_size = n;
 		}
 
@@ -231,6 +236,11 @@ namespace	ft
 				reserve(n);
 			for (size_type i = 0; i < n; i++)
 				_alloc.construct(_ptr + i, val);
+			if (n < _size)
+			{
+				for (size_type i = n; i < _size; i++)
+					_alloc.destroy(_ptr + i);
+			}
 			_size = n;
 		}
 
@@ -299,7 +309,7 @@ namespace	ft
 			{
 				if (i < end)
 				{
-					_alloc.destroy(_ptr + i);
+					// _alloc.destroy(_ptr + i);
 					_alloc.construct(_ptr + i, val);
 				}
 				else
@@ -308,7 +318,7 @@ namespace	ft
 					_alloc.destroy(_ptr + (i - n));
 				}
 			}
-			_alloc.destroy(_ptr + start);
+			// _alloc.destroy(_ptr + start);
 			_alloc.construct(_ptr + start, val);
 			_size += n;
 		}
@@ -337,11 +347,12 @@ namespace	ft
 			for (size_type i = (_size + n) - 1; i >= end; i--)
 			{
 				_alloc.construct(_ptr + i, *(_ptr + (i - n)));
-				_alloc.destroy(_ptr + (i - n));
+				// _alloc.destroy(_ptr + (i - n));
 			}
 			for (size_type i = start; i < end; i++)
 			{
-				_alloc.destroy(_ptr + i);
+				if (i < _size)
+					_alloc.destroy(_ptr + i);
 				_alloc.construct(_ptr + i, *(first++));
 			}
 			_size += n;
@@ -360,18 +371,19 @@ namespace	ft
 				_alloc.construct(_ptr + i, *(_ptr + i + 1));
 				i++;
 			}
+			_alloc.destroy(_ptr + i);
 			return (iterator(position));
 		}
 
 		iterator	erase(iterator first, iterator last)
 		{
-			size_type	n = 0 /*std::distance(first, last)*/;
+			size_type	n = 0;
 			for (iterator tmp = first; tmp != last; tmp++)
 				n++;
-			size_type	start = 0 /*std::distance(begin(), first)*/;
+			size_type	start = 0;
 			for (iterator it = begin(); it != first; it++)
 				start++;
-			size_type	end = start + n;
+			// size_type	end = start + n;
 
 			if (n == 0)
 				return (first);
@@ -380,7 +392,7 @@ namespace	ft
 				_alloc.destroy(_ptr + i);
 				_alloc.construct(_ptr + i, *(_ptr + i + n));
 			}
-			for (size_type i = end; i < _size; i++)
+			for (size_type i = _size - n; i < _size; i++)
 				_alloc.destroy(_ptr + i);
 			_size -= n;
 			return (iterator(first));
