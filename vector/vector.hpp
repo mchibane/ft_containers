@@ -296,6 +296,8 @@ namespace	ft
 			for (iterator it = begin(); it != position; it++)
 				start++;
 			end = start + n;
+			if (n == 0)
+				return ;
 			if (capacity() == 0)
 				reserve(1);
 			else if ((_size + n) > capacity())
@@ -335,6 +337,8 @@ namespace	ft
 				start++;
 			size_type	end = start + n;
 
+			if (n == 0)
+				return ;
 			if (capacity() == 0)
 				reserve(1);
 			if ((_size + n) > capacity())
