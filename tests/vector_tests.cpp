@@ -85,6 +85,7 @@ void	iterators(void)
 void	capacity(void)
 {
 	NS::vector<std::string>	vec;
+	NS::vector<std::string>	empt;
 	size_t					max_num;
 
 	std::cout << "======> CAPACITY <======" << std::endl;
@@ -93,6 +94,23 @@ void	capacity(void)
 		vec.push_back(rand_str_gen());
 	std::cout << "------[ VEC ]------" << std::endl;
 	print_vec(vec);
+	std::cout << "------[ RESERVE 50 ]------" << std::endl;
+	vec.reserve(50);
+	print_vec(vec);
+	std::cout << "------[ RESIZE 10 ]------" << std::endl;
+	vec.resize(10);
+	print_vec(vec);
+	std::cout << "------[ RESIZE 42 ]------" << std::endl;
+	vec.resize(42);
+	print_vec(vec);
+	std::cout << "------[ RESIZE 2000 ]------" << std::endl;
+	vec.resize(2000);
+	print_vec(vec);
+	std::cout << "------[ EMPTY ]------" << std::endl;
+	std::cout << std::boolalpha;
+	std::cout << "vec empty ?\t: " << vec.empty() << std::endl;
+	std::cout << "vec2 empty ?\t: " << empt.empty() << std::endl;
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
 int	main(void)
