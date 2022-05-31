@@ -1,9 +1,9 @@
 #! /bin/bash
 
-rm -rf ./outfiles/*
-c++ -Wall -Wextra -Werror --std=c++98 my_main.cpp -o my_main
-c++ -Wall -Wextra -Werror --std=c++98 stl_main.cpp -o stl_main
-valgrind ./stl_main > ./outfiles/stl.out 2>/dev/null
-valgrind ./my_main > ./outfiles/my.out 2>/dev/null
-diff ./outfiles/my.out ./outfiles/stl.out
-rm -rf stl_main my_main
+c++ -Wall -Wextra -Werror -D__FT__ --std=c++98 -g3 -Itests/ -Imap/ -Ivector/ -Istack/ -Iset/ -o ft_main tests/vector_tests.cpp tests/utils.cpp
+c++ -Wall -Wextra -Werror --std=c++98 -g3 -Itests/ -Imap/ -Ivector/ -Istack/ -Iset/ -o stl_main tests/vector_tests.cpp tests/utils.cpp
+
+./ft_main >ft.out
+./stl_main >stl.out
+
+diff -ys ft.out stl.out

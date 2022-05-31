@@ -114,9 +114,9 @@ namespace	ft
 			{
 				this->clear();
 				_alloc.deallocate(_ptr, _capacity);
-				_ptr = _alloc.allocate(rhs.capacity());
+				_ptr = _alloc.allocate(rhs.size());
 				_size = rhs.size();
-				_capacity = rhs.capacity();
+				_capacity = rhs.size();
 				for (size_type i = 0; i < rhs._size; i++)
 					_alloc.construct(_ptr + i, *(rhs._ptr + i));
 			}
