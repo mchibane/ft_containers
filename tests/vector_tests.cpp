@@ -113,6 +113,39 @@ void	capacity(void)
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
+void	elem_access(void)
+{
+	NS::vector<std::string>	vec;
+	size_t					max_num;
+
+	std::cout << "======> ELEMENT ACCES <======" << std::endl;
+	max_num = rand() % (25 + 1 - 10) + 10;
+	for (size_t i = 0; i < max_num; i++)
+		vec.push_back(rand_str_gen());
+	std::cout << "------[ VEC using operator[] ]------" << std::endl;
+	for (size_t i = 0; i < vec.size(); i++)
+		std::cout << "[" << i << "]\t" << vec[i] << std::endl;
+	std::cout << std::endl;
+	std::cout << "------[ VEC using at() ]------" << std::endl;
+	for (size_t i = 0; i < vec.size(); i++)
+		std::cout << "at(" << i << ")\t" << vec.at(i) << std::endl;
+	std::cout << std::endl;
+	std::cout << "------[ OUT OF BOUNDS ]------" << std::endl;
+	try
+	{
+		std::cout << vec.at(99);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << e.what() << '\n';
+	}
+	std::cout << std::endl;
+	std::cout << "------[ BACK & FRONT ]------" << std::endl;
+	std::cout << "vec.front()\t: " << vec.front() << std::endl;
+	std::cout << "vec.back()\t: " << vec.back() << std::endl;
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
 int	main(void)
 {
 	srand(time(NULL));
@@ -126,5 +159,6 @@ int	main(void)
 	assignation();
 	iterators();
 	capacity();
+	elem_access();
 	return (0);
 }
