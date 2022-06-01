@@ -404,8 +404,9 @@ namespace	ft
 
 		void		swap(vector &x)
 		{
-			vector	tmp(*this);
-			pointer	tmp_ptr = _ptr;
+			vector		tmp(*this);
+			size_type	cap = capacity();
+			pointer		tmp_ptr = _ptr;
 
 			_alloc = x.get_allocator();
 			_size = x.size();
@@ -414,7 +415,7 @@ namespace	ft
 
 			x._alloc = tmp.get_allocator();
 			x._size = tmp.size();
-			x._capacity = tmp.capacity();
+			x._capacity = cap;
 			x._ptr = tmp_ptr;
 		}
 
@@ -484,5 +485,11 @@ namespace	ft
 
 
 } // namespace ft
+
+namespace std
+{
+	template<class T, class Alloc>
+	void	swap(ft::vector<T, Alloc> &x, ft::vector<T, Alloc> &y) { x.swap(y); }
+} // namespace std
 
 #endif

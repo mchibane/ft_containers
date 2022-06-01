@@ -213,16 +213,66 @@ void	ins_erase(void)
 	vec.insert(vec.begin() + 1, lst.begin(), lst.end());
 	print_vec(vec);
 	std::cout << std::endl;
-	std::cout << "======> ERASE <======" << std::endl;
+	std::cout << "======> ERASE & CLEAR <======" << std::endl;
 	std::cout << "------[ Single Element (@vec.begin() + 8) ]------" << std::endl;
 	vec.erase(vec.begin() + 8);
 	print_vec(vec);
 	std::cout << "------[ Range (vec.begin() + 2, vec.end() - 5) ]------" << std::endl;
 	vec.erase(vec.begin() + 2, vec.end() - 5);
 	print_vec(vec);
-	std::cout << "------[ Range (begin(), end()) ]------" << std::endl;
-	vec.erase(vec.begin(), vec.end());
+	std::cout << "------[ Clear ]------" << std::endl;
+	vec.clear();
 	print_vec(vec);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
+void	vector_swap(void)
+{
+	NS::vector<int>	foo;
+	NS::vector<int>	bar;
+	size_t			max_num;
+
+	std::cout << "======> SWAP <======" << std::endl;
+	max_num = rand() % (24 + 1 - 10) + 10;
+	for (size_t i = 0; i < max_num; i++)
+	{
+		foo.push_back(rand() % 100);
+		if (i < 10)
+			bar.push_back(rand() % 42);
+	}
+	NS::vector<int>::iterator	fooit1 = foo.begin() + 4;
+	NS::vector<int>::iterator	fooit2 = foo.end() - 2;
+	NS::vector<int>::iterator	barit1 = bar.end() - 5;
+	NS::vector<int>::iterator	barit2 = bar.begin() + 2;
+	std::cout << "------[ Inital Vectors ]------" << std::endl;
+	std::cout << "      [ FOO ]      " << std::endl;
+	print_vec(foo);
+	std::cout << "      [ BAR ]      " << std::endl;
+	print_vec(bar);
+	std::cout << "------[ Pre-Swap iterators ]------" << std::endl;
+	std::cout << "fooit1\t: " << *fooit1 << std::endl;
+	std::cout << "fooit2\t: " << *fooit2 << std::endl;
+	std::cout << "barit1\t: " << *barit1 << std::endl;
+	std::cout << "barit2\t: " << *barit2 << std::endl;
+	std::cout << std::endl;
+	std::cout << "------[ Swap ]------" << std::endl;
+	foo.swap(bar);
+	std::cout << "      [ FOO ]      " << std::endl;
+	print_vec(foo);
+	std::cout << "      [ BAR ]      " << std::endl;
+	print_vec(bar);
+	std::cout << "------[ Iterator Validity ]------" << std::endl;
+	std::cout << "fooit1\t: " << *fooit1 << std::endl;
+	std::cout << "fooit2\t: " << *fooit2 << std::endl;
+	std::cout << "barit1\t: " << *barit1 << std::endl;
+	std::cout << "barit2\t: " << *barit2 << std::endl;
+	std::cout << std::endl;
+	std::cout << "------[ Non Member Swap ]------" << std::endl;
+	std::swap(foo, bar);
+	std::cout << "      [ FOO ]      " << std::endl;
+	print_vec(foo);
+	std::cout << "      [ BAR ]      " << std::endl;
+	print_vec(bar);
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
@@ -242,6 +292,7 @@ int	main(void)
 	// elem_access();
 	// assign();
 	// push_pop();
-	ins_erase();
+	// ins_erase();
+	vector_swap();
 	return (0);
 }

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-rm -rf ft.out stl.out stl_main ft_main
+rm -rf *.out ft_main stl_main
 c++ -Wall -Wextra -Werror -D__FT__ --std=c++98 -g3 -Itests/ -Imap/ -Ivector/ -Istack/ -Iset/ -o ft_main tests/vector_tests.cpp tests/utils.cpp
 c++ -Wall -Wextra -Werror --std=c++98 -g3 -Itests/ -Imap/ -Ivector/ -Istack/ -Iset/ -o stl_main tests/vector_tests.cpp tests/utils.cpp
 
