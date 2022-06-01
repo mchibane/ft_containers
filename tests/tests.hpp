@@ -9,27 +9,18 @@
 
 /* VECTOR */
 #include "../vector/vector.hpp"
-#include "../vector/vectorIterator.hpp"
-#include "../vector/vectorConstIterator.hpp"
-
 #include <vector>
 
 /* STACK */
 #include "../stack/stack.hpp"
-
 #include <stack>
 
 /* MAP */
 #include "../map/map.hpp"
-#include "../map/RBT.hpp"
-#include "../map/rbt_iterator.hpp"
-#include "../map/rbt_const_iterator.hpp"
-
 #include <map>
 
 /* SET */
 #include "../set/set.hpp"
-
 #include <set>
 
 #include <iostream>
