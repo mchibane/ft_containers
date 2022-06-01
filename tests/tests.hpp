@@ -35,6 +35,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <list>
 
 char		rand_lo(void);
 char		rand_up(void);
@@ -78,6 +79,15 @@ void	print_stack(NS::stack<T> st)
 		i++;
 		st.pop();
 	}
+}
+
+template<class T>
+void	print_list(std::list<T> const &lst)
+{
+	std::cout << "List Content : " << std::endl;
+	for (typename std::list<T>::const_iterator it = lst.begin(); it != lst.end(); it++)
+		std::cout << *it << std::endl;
+	std::cout << std::endl;
 }
 
 #endif

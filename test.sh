@@ -1,9 +1,10 @@
 #! /bin/bash
 
+rm -rf ft.out stl.out stl_main ft_main
 c++ -Wall -Wextra -Werror -D__FT__ --std=c++98 -g3 -Itests/ -Imap/ -Ivector/ -Istack/ -Iset/ -o ft_main tests/vector_tests.cpp tests/utils.cpp
 c++ -Wall -Wextra -Werror --std=c++98 -g3 -Itests/ -Imap/ -Ivector/ -Istack/ -Iset/ -o stl_main tests/vector_tests.cpp tests/utils.cpp
 
-./ft_main >ft.out
-./stl_main >stl.out
+valgrind ./ft_main 1>ft.out 2>ft.err.out
+valgrind ./stl_main 1>stl.out 2>stl.err.out
 
 diff -ys ft.out stl.out

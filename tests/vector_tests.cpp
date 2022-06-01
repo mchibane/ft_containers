@@ -1,4 +1,5 @@
 #include "tests.hpp"
+#include <list>
 
 void	copy_contruct(void)
 {
@@ -146,19 +147,101 @@ void	elem_access(void)
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
+void	assign(void)
+{
+	NS::vector<std::string>	vec;
+	std::list<std::string>	lst;
+	size_t					max_num;
+
+	std::cout << "======> ASSIGN <======" << std::endl;
+	max_num = rand() % (22 + 1 - 5) + 5;
+	for (size_t i = 0; i < max_num; i++)
+		lst.push_back(rand_str_gen());
+	print_list(lst);
+	std::cout << "------[ Range ]------" << std::endl;
+	vec.assign(lst.begin(), lst.end());
+	print_vec(vec);
+	std::cout << "------[ Fill ]------" << std::endl;
+	vec.assign(12, "fill");
+	print_vec(vec);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
+void	push_pop(void)
+{
+	NS::vector<std::string>	vec;
+	size_t					max_num;
+
+	std::cout << "======> PUSH & POP BACK <======" << std::endl;
+	max_num = rand() % (42 + 1 - 12) + 12;
+	for (size_t i = 0; i < max_num; i++)
+		vec.push_back(rand_str_gen());
+	std::cout << "------[ Push back ]------" << std::endl;
+	print_vec(vec);
+	std::cout << "------[ Pop back * 7 ]------" << std::endl;
+	for (size_t i = 0; i < 7; i++)
+		vec.pop_back();
+	print_vec(vec);
+	std::cout << "------[ Push back * 2 ]------" << std::endl;
+	for (size_t i = 0; i < 2; i++)
+		vec.push_back(rand_str_gen());
+	print_vec(vec);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
+void	ins_erase(void)
+{
+	NS::vector<std::string>	vec(5, "init");
+	std::list<std::string>	lst;
+	size_t					max_num;
+
+	std::cout << "======> INSERT <======" << std::endl;
+	max_num = rand() % (12 + 1 - 5) + 5;
+	for (size_t i = 0; i < max_num; i++)
+		lst.push_back(rand_str_gen());
+	std::cout << "------[ Initial Vector ]------" << std::endl;
+	print_vec(vec);
+	std::cout << "------[ Initial List ]------" << std::endl;
+	print_list(lst);
+	std::cout << "------[ Single Element (@vec.begin() + 2) ]------" << std::endl;
+	vec.insert(vec.begin() + 2, "SINGLE ELEM");
+	print_vec(vec);
+	std::cout << "------[ Fill (@vec.begin() + 4) ]------" << std::endl;
+	vec.insert(vec.begin() + 4, 5, "FILL");
+	print_vec(vec);
+	std::cout << "------[ Range (@vec.begin() + 1) ]------" << std::endl;
+	vec.insert(vec.begin() + 1, lst.begin(), lst.end());
+	print_vec(vec);
+	std::cout << std::endl;
+	std::cout << "======> ERASE <======" << std::endl;
+	std::cout << "------[ Single Element (@vec.begin() + 8) ]------" << std::endl;
+	vec.erase(vec.begin() + 8);
+	print_vec(vec);
+	std::cout << "------[ Range (vec.begin() + 2, vec.end() - 5) ]------" << std::endl;
+	vec.erase(vec.begin() + 2, vec.end() - 5);
+	print_vec(vec);
+	std::cout << "------[ Range (begin(), end()) ]------" << std::endl;
+	vec.erase(vec.begin(), vec.end());
+	print_vec(vec);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
 int	main(void)
 {
-	srand(time(NULL));
+	// srand(time(NULL));
 	// #ifdef __FT__
 	// std::cout << "============> FT <============" << std::endl;
 	// #else
 	// std::cout << "============> STL <============" << std::endl;
 	// #endif
 
-	copy_contruct();
-	assignation();
-	iterators();
-	capacity();
-	elem_access();
+	// copy_contruct();
+	// assignation();
+	// iterators();
+	// capacity();
+	// elem_access();
+	// assign();
+	// push_pop();
+	ins_erase();
 	return (0);
 }
