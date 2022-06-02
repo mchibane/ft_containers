@@ -281,7 +281,6 @@ namespace	ft
 					_alloc.construct(_ptr + i, *(_ptr + (i - 1)));
 					_alloc.destroy(_ptr + (i - 1));
 			}
-			_alloc.destroy(_ptr + pos);
 			_alloc.construct(_ptr + pos, val);
 			_size++;
 			return (iterator(_ptr + pos));
@@ -300,7 +299,7 @@ namespace	ft
 				return ;
 			if (capacity() == 0)
 				reserve(1);
-			else if ((_size + n) > capacity())
+			if ((_size + n) > capacity())
 			{
 				if (max_size() - _size >= _size && n <= _size)
 					reserve(_size * 2);
@@ -310,17 +309,13 @@ namespace	ft
 			for (size_type i = (_size + n) - 1; i > start; i--)
 			{
 				if (i < end)
-				{
-					// _alloc.destroy(_ptr + i);
 					_alloc.construct(_ptr + i, val);
-				}
 				else
 				{
 					_alloc.construct(_ptr + i, *(_ptr + (i - n)));
 					_alloc.destroy(_ptr + (i - n));
 				}
 			}
-			// _alloc.destroy(_ptr + start);
 			_alloc.construct(_ptr + start, val);
 			_size += n;
 		}
@@ -329,10 +324,10 @@ namespace	ft
 		template<class InputIterator>
 		void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if< !ft::is_integral< InputIterator >::value >::type * = 0)
 		{
-			size_type	n = 0/*std::distance(first, last)*/;
+			size_type	n = 0;
 			for (InputIterator tmp = first; tmp != last; tmp++)
 				n++;
-			size_type	start = 0 /*std::distance(begin(), position)*/;
+			size_type	start = 0;
 			for (iterator it = begin(); it != position; it++)
 				start++;
 			size_type	end = start + n;
@@ -387,8 +382,6 @@ namespace	ft
 			size_type	start = 0;
 			for (iterator it = begin(); it != first; it++)
 				start++;
-			// size_type	end = start + n;
-
 			if (n == 0)
 				return (first);
 			for (size_type i = start; i < _size - n; i++)

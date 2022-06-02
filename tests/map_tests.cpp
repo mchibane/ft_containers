@@ -184,7 +184,40 @@ void	map_swap(void)
 			foo.insert(NS::make_pair(rand() %100, rand_str_gen()));
 		bar.insert(NS::make_pair(rand() % 1000, rand_str_gen()));
 	}
-	map_it	fooit1;
+	map_it	fooit1 = ++(++(++(++(foo.begin()))));
+	map_it	fooit2 = --(--(foo.end()));
+	map_it	barit1 = --(--(--(--(--(--(bar.end()))))));
+	map_it	barit2 = --(bar.end());
+	std::cout << "------[ Initial Maps ]------" << std::endl;
+	std::cout << "      [ FOO ]      " << std::endl;
+	print_map(foo);
+	std::cout << "      [ BAR ]      " << std::endl;
+	print_map(bar);
+	std::cout << "------[ Pre-Swap iterators ]------" << std::endl;
+	std::cout << "fooit1->first : " << fooit1->first << "\tfooit1->second : " << fooit1->second << std::endl;
+	std::cout << "fooit2->first : " << fooit2->first << "\tfooit2->second : " << fooit2->second << std::endl;
+	std::cout << "barit1->first : " << barit1->first << "\tbarit1->second : " << barit1->second << std::endl;
+	std::cout << "barit2->first : " << barit2->first << "\tbarit2->second : " << barit2->second << std::endl;
+	std::cout << std::endl;
+	std::cout << "------[ Swap ]------" << std::endl;
+	foo.swap(bar);
+	std::cout << "      [ FOO ]      " << std::endl;
+	print_map(foo);
+	std::cout << "      [ BAR ]      " << std::endl;
+	print_map(bar);
+	std::cout << "------[ Iterator Validity ]------" << std::endl;
+	std::cout << "fooit1->first : " << fooit1->first << "\tfooit1->second : " << fooit1->second << std::endl;
+	std::cout << "fooit2->first : " << fooit2->first << "\tfooit2->second : " << fooit2->second << std::endl;
+	std::cout << "barit1->first : " << barit1->first << "\tbarit1->second : " << barit1->second << std::endl;
+	std::cout << "barit2->first : " << barit2->first << "\tbarit2->second : " << barit2->second << std::endl;
+	std::cout << std::endl;
+	std::cout << "------[ Non Member Swap ]------" << std::endl;
+	std::swap(foo, bar);
+	std::cout << "      [ FOO ]      " << std::endl;
+	print_map(foo);
+	std::cout << "      [ BAR ]      " << std::endl;
+	print_map(bar);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
 int	main(void)
@@ -195,5 +228,6 @@ int	main(void)
 	iterators();
 	elem_acces();
 	ins_erase();
+	map_swap();
 	return (0);
 }
