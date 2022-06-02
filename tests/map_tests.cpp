@@ -150,6 +150,21 @@ void	ins_erase(void)
 	std::cout << "------[ Inserting into map ]------" << std::endl;
 	m.insert(lst.begin(), lst.end());
 	print_map(m);
+	std::cout << "======> ERASE <======" << std::endl;
+	std::cout << "------[ Single element (iterator)]------" << std::endl;
+	for (size_t i = 0; i < 5; i++)
+		m.erase(--(m.end()));
+	print_map(m);
+	std::cout << "------[ Single element (key) ]------" << std::endl;
+	for (size_t i = 4; i <= 10; i++)
+		m.erase(i);
+	print_map(m);
+	std::cout << "------[ Range ]------" << std::endl;
+	m.erase(--(--(--(--(m.end())))), --(m.end()));
+	print_map(m);
+	std::cout << "======> CLEAR <======" << std::endl;
+	m.clear();
+	print_map(m);
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
