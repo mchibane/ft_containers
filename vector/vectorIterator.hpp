@@ -1,10 +1,11 @@
 #ifndef VECTOR_ITERATOR_HPP
 #define VECTOR_ITERATOR_HPP
 
-#include "../iteratorTags.hpp"
+// #include "../iteratorTags.hpp"
 #include "vector.hpp"
 #include "vectorConstIterator.hpp"
 #include <cstddef>
+#include <iterator>
 
 namespace ft
 {
@@ -19,7 +20,7 @@ namespace ft
 		typedef T*							pointer;
 		typedef T&							reference;
 		typedef std::ptrdiff_t				difference_type;
-		typedef random_access_iterator_tag	iterator_category;
+		typedef std::random_access_iterator_tag	iterator_category;
 
 	protected:
 		pointer	_ptr;
@@ -49,9 +50,9 @@ namespace ft
 			/* EQUIVALENCES */
 
 		// template<class I>
-		bool	operator==(ft::vectorConstIterator<T> const &rhs) { return (_ptr == rhs.getPtr()); }
+		bool	operator==(ft::vectorIterator<T> const &rhs) const { return (_ptr == rhs.getPtr()); }
 		// template<class I>
-		bool	operator!=(ft::vectorConstIterator<T> const &rhs) { return (!(*this == rhs)); }
+		bool	operator!=(ft::vectorIterator<T> const &rhs) const { return (!(*this == rhs)); }
 
 
 			/* DEREFERENCE */

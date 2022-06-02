@@ -4,12 +4,16 @@
 void	copy_contruct(void)
 {
 	NS::vector<int>	vec;
+	std::list<int>	lst;
 	size_t			max_num;
 
 	std::cout << "======> COPY CONSTRUCT <======" << std::endl << std::endl;
 	max_num = (rand() % 25) + 1;
 	for (size_t i = 0; i < max_num; i++)
+	{
+		lst.push_back(rand() % 1000);
 		vec.push_back(rand() % 100);
+	}
 	std::cout << "------[ VEC ]------" << std::endl;
 	print_vec(vec);
 	{
@@ -17,6 +21,12 @@ void	copy_contruct(void)
 		std::cout << "------[ VEC 2 (COPY) ]------" << std::endl;
 		print_vec(vec2);
 	}
+	NS::vector<int>	range(lst.begin(), lst.end());
+	std::cout << "------[ Range ]------" << std::endl;
+	print_vec(range);
+	std::cout << "------[ Fill ]------" << std::endl;
+	NS::vector<int>	fill(6, 17);
+	print_vec(fill);
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
@@ -285,7 +295,7 @@ int	main(void)
 	// std::cout << "============> STL <============" << std::endl;
 	// #endif
 
-	// copy_contruct();
+	copy_contruct();
 	// assignation();
 	// iterators();
 	// capacity();
@@ -293,6 +303,6 @@ int	main(void)
 	// assign();
 	// push_pop();
 	// ins_erase();
-	vector_swap();
+	// vector_swap();
 	return (0);
 }

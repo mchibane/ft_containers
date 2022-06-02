@@ -439,8 +439,8 @@ namespace	ft
 
 	/* SWAP */
 
-	template<class T, class Alloc>
-	void	swap(ft::vector<T, Alloc> &x, ft::vector<T, Alloc> &y) { x.swap(y); }
+	// template<class T, class Alloc>
+	// void	swap(ft::vector<T, Alloc> &x, ft::vector<T, Alloc> &y) { x.swap(y); }
 
 
 	/* RELATIONNAL OPERATORS */

@@ -3,7 +3,8 @@
 
 #include <functional>
 #include "RBT.hpp"
-#include "../iteratorTags.hpp"
+// #include "../iteratorTags.hpp"
+#include <iterator>
 
 #include <iostream>
 
@@ -21,7 +22,7 @@ namespace ft
 			typedef typename ft::RBT<value_type, comp>	tree_type;
 			typedef typename tree_type::nodeptr			nodeptr;
 
-			typedef bidirectional_iterator_tag			iterator_category;
+			typedef std::bidirectional_iterator_tag			iterator_category;
 			typedef std::ptrdiff_t						difference_type;
 
 		private:

@@ -168,6 +168,25 @@ void	ins_erase(void)
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
+void	map_swap(void)
+{
+	typedef NS::map<int, std::string>::iterator	map_it;
+
+	NS::map<int, std::string>	foo;
+	NS::map<int, std::string>	bar;
+	size_t						max_num;
+
+	std::cout << "======> SWAP <======" << std::endl;
+	max_num = rand() % (32 + 1 - 12) + 12;
+	for (size_t i = 0; i < max_num; i++)
+	{
+		if (i < 10)
+			foo.insert(NS::make_pair(rand() %100, rand_str_gen()));
+		bar.insert(NS::make_pair(rand() % 1000, rand_str_gen()));
+	}
+	map_it	fooit1;
+}
+
 int	main(void)
 {
 	srand(42);

@@ -313,8 +313,8 @@ namespace ft
 
 	/* SWAP */
 
-	template<class Key, class T, class Compare, class Alloc>
-	void	swap(ft::map<Key, T, Compare, Alloc> &lhs, ft::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
+	// template<class Key, class T, class Compare, class Alloc>
+	// void	swap(ft::map<Key, T, Compare, Alloc> &lhs, ft::map<Key, T, Compare, Alloc> &rhs) { lhs.swap(rhs); }
 
 
 	/* RELATIONAL OPERATORS */

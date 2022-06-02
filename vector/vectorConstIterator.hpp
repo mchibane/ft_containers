@@ -1,10 +1,11 @@
 #ifndef VECTOR_CONST_IT_HPP
 #define VECTOR_CONST_IT_HPP
 
-#include "../iteratorTags.hpp"
+// #include "../iteratorTags.hpp"
 #include "vector.hpp"
 #include "vectorIterator.hpp"
 #include <cstddef>
+#include <iterator>
 
 namespace ft
 {
@@ -19,7 +20,7 @@ namespace ft
 			typedef const T*					pointer;
 			typedef const T&					reference;
 			typedef std::ptrdiff_t				difference_type;
-			typedef random_access_iterator_tag	iterator_category;
+			typedef std::random_access_iterator_tag	iterator_category;
 
 		protected:
 			pointer	_ptr;
