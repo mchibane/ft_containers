@@ -44,6 +44,22 @@ void print_vec(NS::vector<T> const &vec)
 	std::cout << std::endl;
 }
 
+template<class T>
+void	print_set(NS::set<T> const &s)
+{
+	int i = 0;
+
+	std::cout << "SIZE		: " << s.size() << std::endl;
+	// std::cout << "MAX SIZE	: " << s.max_size() << std::endl;
+	std::cout << std::boolalpha << "EMPTY		: " << s.empty() << std::endl;
+	for (typename NS::set<T>::const_iterator it = s.begin(); it != s.end(); it++)
+	{
+		std::cout << "[" << i << "]\t Key : [" << *it << "]" << std::endl;
+		i++;
+	}
+	std::cout << std::endl;
+}
+
 template<class T, class U>
 void	print_map(NS::map<T, U> const &m)
 {
@@ -113,7 +129,23 @@ void	m_find(NS::map<T,U> &m, T const &v)
 template<class T, class U>
 void	m_count(NS::map<T, U> &m, T const &v)
 {
-	std::cout << "Counting key : " << v << "\tcount ret : " << m.count(v) << std::endl << std::endl;
+	std::cout << "Counting key : " << v << "\tcount ret : " << m.count(v) << std::endl;
+}
+
+template<class T>
+void	s_find(NS::set<T> &s, T const &v)
+{
+	typename NS::set<T>::iterator	it = s.find(v);
+	if (it != s.end())
+		std::cout << "Key Found : " << *it << std::endl;
+	else
+		std::cout << "Key not found : " << v << std::endl;
+}
+
+template<class T>
+void	s_count(NS::set<T> &s, T const &v)
+{
+	std::cout << "Counting key : " << v << "\tcount ret : " << s.count(v) << std::endl;
 }
 
 #endif

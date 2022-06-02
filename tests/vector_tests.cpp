@@ -7,7 +7,7 @@ void	copy_contruct(void)
 	std::list<int>	lst;
 	size_t			max_num;
 
-	std::cout << "======> COPY CONSTRUCT <======" << std::endl << std::endl;
+	std::cout << "======> CONSTRUCTORS <======" << std::endl << std::endl;
 	max_num = (rand() % 25) + 1;
 	for (size_t i = 0; i < max_num; i++)
 	{

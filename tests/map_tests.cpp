@@ -285,6 +285,7 @@ void	bounds_range(void)
 			std::cout << "[" << i << "]\tRange == 0" << std::endl;
 	}
 	std::cout << std::endl;
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
 int	main(void)
