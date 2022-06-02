@@ -90,4 +90,30 @@ void	print_list(std::list<NS::pair<T, U> > const &lst)
 	std::cout << std::endl;
 }
 
+template<class T, class U>
+void	m_find_const(NS::map<T,U> const &m, T const &v)
+{
+	typename NS::map<T, U>::const_iterator	it = m.find(v);
+	if (it != m.end())
+		std::cout << "(const)\tKey Found : " << it->first << "\t| it->second : " << it->second << std::endl;
+	else
+		std::cout <<"(const)\t\tKey not found : " << v << std::endl;
+}
+
+template<class T, class U>
+void	m_find(NS::map<T,U> &m, T const &v)
+{
+	typename NS::map<T, U>::iterator	it = m.find(v);
+	if (it != m.end())
+		std::cout << "\tKey Found : " << it->first << "\t| it->second : " << it->second << std::endl;
+	else
+		std::cout << "\t\tKey not found : " << v << std::endl;
+}
+
+template<class T, class U>
+void	m_count(NS::map<T, U> &m, T const &v)
+{
+	std::cout << "Counting key : " << v << "\tcount ret : " << m.count(v) << std::endl << std::endl;
+}
+
 #endif

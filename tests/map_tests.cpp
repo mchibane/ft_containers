@@ -220,6 +220,73 @@ void	map_swap(void)
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
+void	map_find_count(void)
+{
+	NS::map<int, std::string>	m;
+	size_t						max_num;
+
+	std::cout << "======> FIND <======" << std::endl;
+	max_num = rand() % (34 + 1 - 12) + 12;
+	for (size_t i = 0; i < max_num; i++)
+		m.insert(NS::make_pair(rand() % 100, rand_str_gen()));
+	std::cout << "------[ Initial map ]------" << std::endl;
+	print_map(m);
+	std::cout << "------[ Find ]------" << std::endl;
+	for (int i = 0; i < 100; i++)
+		m_find(m, i);
+	std::cout << "------[ Find (const) ]------" << std::endl;
+	for (int i = 0; i < 100; i++)
+		m_find_const(m, i);
+	std::cout << "------[ Count ]------" << std::endl;
+	for (int i = 0; i < 100; i++)
+		m_count(m, i);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
+void	bounds_range(void)
+{
+	typedef NS::map<int, std::string>::iterator	mapit;
+	NS::map<int, std::string>	m;
+	mapit						it;
+	NS::pair<mapit, mapit>		eq;
+
+	std::cout << "======> LOWER BOUND <======" << std::endl;
+	for (size_t i = 0; i < 8; i++)
+		m.insert(NS::make_pair(i * 3, rand_str_gen()));
+	std::cout << "------[ Initial Map ]------" << std::endl;
+	print_map(m);
+	std::cout << "------[ Lower Bound ]------" << std::endl;
+	for (int i = 0; i < 24; i++)
+	{
+		it = m.lower_bound(i);
+		if (it != m.end())
+			std::cout << "[" << i << "]\tLower Bound : Key : " << it->first << "\tValue : " << it->second << std::endl;
+		else
+			std::cout << "[" << i << "]\tLower Bound : map.end()" << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << "------[ Upper Bound ]------" << std::endl;
+	for (int i = 0; i < 24; i++)
+	{
+		it = m.upper_bound(i);
+		if (it != m.end())
+			std::cout << "[" << i << "]\tUpper Bound : Key : " << it->first << "\tValue : " << it->second << std::endl;
+		else
+			std::cout << "[" << i << "]\tUpper Bound : map.end()" << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << "------[ Equal Range ]------" << std::endl;
+	for (int i = 0; i < 24; i++)
+	{
+		eq = m.equal_range(i);
+		if (eq.first != m.end() && eq.second != m.end())
+			std::cout << "[" << i << "]\tEqual Range : Eq.first(Key) : " << eq.first->first << " Eq.second(Key) : " << eq.second->first << std::endl;
+		else
+			std::cout << "[" << i << "]\tRange == 0" << std::endl;
+	}
+	std::cout << std::endl;
+}
+
 int	main(void)
 {
 	srand(42);
@@ -229,5 +296,7 @@ int	main(void)
 	elem_acces();
 	ins_erase();
 	map_swap();
+	map_find_count();
+	bounds_range();
 	return (0);
 }
