@@ -86,10 +86,80 @@ void	iterators(void)
 	std::cout << "=============================" << std::endl << std::endl << std::endl;
 }
 
+void	elem_acces(void)
+{
+	NS::map<int, std::string>	m;
+	size_t						max_num;
+
+	std::cout << "======> ELEMENT ACCESS <======" << std::endl;
+	max_num = rand() %(17 + 1 - 10) + 10;
+	for (size_t i = 0; i < max_num; i++)
+		m.insert(NS::make_pair(i + 1, rand_str_gen()));
+	std::cout << "------[ Initial map ]------" << std::endl;
+	print_map(m);
+	std::cout << "------[ Element access (Read) ]------" << std::endl;
+	for (size_t i = 0; i < 8; i++)
+		std::cout << "Key : " << i + 1 << " Value : " << m[i + 1] << std::endl;
+	std::cout << "------[ Inexistent Key ]------" << std::endl;
+	std::cout << m[0] << " <-- m[0]" << std::endl;
+	std::cout << m[22] <<" <---m[22]" << std::endl;
+	print_map(m);
+	std::cout << "------[ Assign value ]------" << std::endl;
+	for (size_t i = 4; i < 9; i++)
+		m[i] = "Assign to already existing value";
+	for (size_t i = 45; i < 55; i++)
+		m[i] = "Assign new value";
+	print_map(m);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
+void	ins_erase(void)
+{
+	typedef NS::map<int, std::string>::iterator	m_it;
+
+	NS::map<int, std::string>				m;
+	NS::pair<m_it, bool>					pret;
+	std::list<NS::pair<int, std::string> >	lst;
+	size_t									max_num;
+
+	std::cout << "======> INSERT <======" << std::endl;
+	max_num = rand() % (16 + 1 - 8) + 8;
+	for (size_t i = 0; i < max_num; i++)
+		lst.push_back(NS::make_pair(rand() % 100, rand_str_gen()));
+	std::cout << "------[ Single Element ]------" << std::endl;
+	for (size_t i = 0; i < 12; i++)
+	{
+		pret = m.insert(NS::make_pair(i + 1, rand_str_gen()));
+		std::cout << "[ pret->first (it)]-> first (key) : " << pret.first->first << "\tsecond (value) : " << pret.first->second << std::endl;
+		std::cout << std::boolalpha << "[ pret->second (bool) ] : " << pret.second << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << "------[ Inserting new elems, same key ]------" << std::endl;
+	for (size_t i = 5; i < 10; i++)
+	{
+		pret = m.insert(NS::make_pair(i + 1, rand_str_gen()));
+		std::cout << "[ pret->first (it)]-> first (key) : " << pret.first->first << "\tsecond (value) : " << pret.first->second << std::endl;
+		std::cout << std::boolalpha << "[ pret->second (bool) ] : " << pret.second << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << "------[ Map after single elem insert ]------" << std::endl;
+	print_map(m);
+	std::cout << "------[ Range ]------" << std::endl;
+	std::cout << "------[ Initial list ]------" << std::endl;
+	print_list(lst);
+	std::cout << "------[ Inserting into map ]------" << std::endl;
+	m.insert(lst.begin(), lst.end());
+	print_map(m);
+	std::cout << "=============================" << std::endl << std::endl << std::endl;
+}
+
 int	main(void)
 {
+	srand(42);
 	constructors();
 	assignation();
 	iterators();
+	elem_acces();
+	ins_erase();
 	return (0);
 }
