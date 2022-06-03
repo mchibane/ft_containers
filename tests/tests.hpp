@@ -168,4 +168,50 @@ void	s_count(NS::set<T> &s, T const &v)
 	std::cout << "Counting key : " << v << "\tcount ret : " << s.count(v) << std::endl;
 }
 
+/* MAP TESTS */
+namespace ft_map
+{
+	void	constructors(void);
+	void	assignation(void);
+	void	iterators(void);
+	void	elem_acces(void);
+	void	ins_erase(void);
+	void	map_swap(void);
+	void	map_find_count(void);
+	void	bounds_range(void);
+};
+
+/* VECTOR TESTS */
+namespace ft_vector
+{
+	void	copy_contruct(void);
+	void	assignation(void);
+	void	iterators(void);
+	void	capacity(void);
+	void	elem_access(void);
+	void	assign(void);
+	void	push_pop(void);
+	void	ins_erase(void);
+	void	vector_swap(void);
+};
+
+/* SET TESTS */
+namespace ft_set
+{
+	void	construct(void);
+	void	assignation(void);
+	void	iterators(void);
+	void	ins_erase(void);
+	void	set_swap(void);
+	void	set_find_count(void);
+	void	bounds_range(void);
+};
+
+/* STACK TESTS */
+namespace ft_stack
+{
+	void	constructor(void);
+	void	push_pop(void);
+};
+
 #endif
