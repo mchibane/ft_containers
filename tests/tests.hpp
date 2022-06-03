@@ -27,6 +27,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <list>
+#include <deque>
 
 char		rand_lo(void);
 char		rand_up(void);
@@ -81,12 +82,31 @@ void	print_stack(NS::stack<T> st)
 {
 	size_t	i = 0;
 
+	std::cout << "SIZE  : " << st.size() << std::endl;
+	std::cout << std::boolalpha << "EMPTY :" << st.empty() << std::endl;
 	while (!st.empty())
 	{
 		std::cout << "[" << i << "] : " << st.top() << std::endl;
 		i++;
 		st.pop();
 	}
+	std::cout << std::endl;
+}
+
+template<class T, class U>
+void	print_stack(NS::stack<T, U> st)
+{
+	size_t	i = 0;
+
+	std::cout << "SIZE  : " << st.size() << std::endl;
+	std::cout << std::boolalpha << "EMPTY :" << st.empty() << std::endl;
+	while (!st.empty())
+	{
+		std::cout << "[" << i << "] : " << st.top() << std::endl;
+		i++;
+		st.pop();
+	}
+	std::cout << std::endl;
 }
 
 template<class T>
