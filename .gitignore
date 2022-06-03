@@ -7,3 +7,4 @@ outfiles/
 ft_containers_monkey_tester
 objs/
 bin/
+stderr/
