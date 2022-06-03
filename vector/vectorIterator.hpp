@@ -50,9 +50,9 @@ namespace ft
 			/* EQUIVALENCES */
 
 		// template<class I>
-		bool	operator==(ft::vectorIterator<T> const &rhs) const { return (_ptr == rhs.getPtr()); }
+		bool	operator==(ft::vectorConstIterator<T> const &rhs) const { return (_ptr == rhs.getPtr()); }
 		// template<class I>
-		bool	operator!=(ft::vectorIterator<T> const &rhs) const { return (!(*this == rhs)); }
+		bool	operator!=(ft::vectorConstIterator<T> const &rhs) const { return (!(*this == rhs)); }
 
 
 			/* DEREFERENCE */
