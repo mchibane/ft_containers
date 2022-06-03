@@ -6,7 +6,7 @@ PERF				=	perf
 DEF_ALL				=	-DFT_VEC -DFT_MAP -DFT_STACK -DFT_SET
 
 CXX					=	c++
-CXXFLAGS			=	-Wall -Wextra -Werror
+CXXFLAGS			=	-Wall -Wextra -Werror --std=c++98
 RM					=	rm -rf
 
 HEADERS				=	vector/vector.hpp\
@@ -55,30 +55,37 @@ FT_PERF				=	$(BIN_DIR)$(FT)$(PERF)
 
 all:				$(NAME)
 
-$(NAME):			$(FT_BIN) $(STD_BIN) $(STD_PERF) $(FT_PERF)
+$(NAME):			$(FT_BIN) $(STD_BIN) $(FT_PERF) $(STD_PERF)
+					@echo "Done !"
 
 $(FT_BIN):			$(OBJS) $(HEADERS)
 					@mkdir -p $(BIN_DIR)
-					$(CXX) $(CXXFLAGS) $(OBJS) $(DEF_ALL) -D__FT__ -o $(FT_BIN)
+					@echo "Building ft tests ..."
+					@$(CXX) $(CXXFLAGS) $(OBJS) $(DEF_ALL) -D__FT__ -o $(FT_BIN)
 
 $(STD_BIN):			$(OBJS) $(HEADERS)
 					@mkdir -p $(BIN_DIR)
-					$(CXX) $(CXXFLAGS) $(OBJS) $(DEF_ALL) -o $(STD_BIN)
+					@echo "Building stl tests ..."
+					@$(CXX) $(CXXFLAGS) $(OBJS) $(DEF_ALL) -o $(STD_BIN)
 
 $(STD_PERF):		$(OBJS_PERF) $(HEADERS)
 					@mkdir -p $(BIN_DIR)
-					$(CXX) $(CXXFLAGS) $(OBJS_PERF) -o $(STD_PERF)
+					@echo "Building stl perf tests ..."
+					@$(CXX) $(CXXFLAGS) $(OBJS_PERF) -o $(STD_PERF)
 
 $(FT_PERF):			$(OBJS_PERF) $(HEADERS)
 					@mkdir -p $(BIN_DIR)
-					$(CXX) $(CXXFLAGS) $(OBJS_PERF) -D__FT__ -o $(FT_PERF)
+					@echo "Building ft perf tests ..."
+					@$(CXX) $(CXXFLAGS) $(OBJS_PERF) -D__FT__ -o $(FT_PERF)
 
 
 clean:
-					$(RM) $(OBJS_DIR)
+					@echo "Removing objs/"
+					@$(RM) $(OBJS_DIR)
 
 fclean:				clean
-					$(RM) $(BIN_DIR)
+					@echo "Removing bin/"
+					@$(RM) $(BIN_DIR)
 
 re:					fclean all
 

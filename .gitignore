@@ -5,4 +5,5 @@ containers_test/
 outfiles/
 42TESTERS-CONTAINERS
 ft_containers_monkey_tester
-*.o
+objs/
+bin/
